@@ -1,0 +1,9 @@
+context:
+    resize_data:
+        image_path: pages-src/components/responsive-image/test-img.jpg
+        resolutions:
+            - 200
+            - 300
+        quality: 80
+        sizes_attr: 100px
+        alt: alt_tag
