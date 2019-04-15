@@ -3,6 +3,9 @@
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
+	"bin": {
+		"sealpage": "./cli.js"
+	},
 	"directories": {
 		"example": "examples"
 	},
@@ -28,6 +31,7 @@
 	},
 	"devDependencies": {
 		"babel-eslint": "^10.0.1",
+		"chalk": "^2.4.2",
 		"eslint": "^5.16.0"
 	}
 }

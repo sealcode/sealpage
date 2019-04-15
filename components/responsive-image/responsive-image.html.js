@@ -1,9 +1,9 @@
-const sharp = require("sharp");
-const path = require("path");
-const { promisify } = require("util");
-const locreq = require("locreq")(__dirname);
-const fs = require("fs");
-const hashFile = require("../../../lib/hash-file.js");
+const sharp = require('sharp');
+const path = require('path');
+const { promisify } = require('util');
+const locreq = require('locreq')(__dirname);
+const fs = require('fs');
+const hashFile = require('../../../lib/hash-file.js');
 const access = promisify(fs.access);
 
 /*
@@ -19,7 +19,7 @@ module.exports = async function({
 	resolutions,
 	quality = 80,
 	sizes_attr,
-	alt = "",
+	alt = '',
 }) {
 	try {
 		const image_path_to_checksum = {};
@@ -53,7 +53,7 @@ module.exports = async function({
 		);
 		//Generate appropriate repsonsive img tag
 		return /* HTML  */ `<img src="${image_path}" srcset="${created_files.join(
-			",\n"
+			',\n'
 		)}" sizes="${sizes_attr}" alt="${alt}"/>`;
 	} catch (error) {
 		throw new Error(error);

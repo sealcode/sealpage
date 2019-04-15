@@ -1,11 +1,11 @@
-const resp_img = require("./responsive-image.html.js");
-const fs = require("fs");
-const assert = require("assert");
-const path = require("path");
+const resp_img = require('./responsive-image.html.js');
+const fs = require('fs');
+const assert = require('assert');
+const path = require('path');
 
 // Check if any of the test files already exist if so - delete them
 beforeEach(function() {
-	["200w", "300w"].forEach(suffix => {
+	['200w', '300w'].forEach(suffix => {
 		const file_path = path.resolve(
 			__dirname,
 			`../../../public/assets/test-img-02f66078${suffix}.jpg`
@@ -29,7 +29,7 @@ beforeEach(function() {
 
 //After test delete the test files
 after(function() {
-	["200w", "300w"].forEach(suffix => {
+	['200w', '300w'].forEach(suffix => {
 		fs.unlinkSync(
 			path.resolve(
 				__dirname,
@@ -42,16 +42,16 @@ after(function() {
 	});
 });
 
-describe("responsive-image-creator", function() {
-	it("Should create images with given resolutions", async function() {
-		const file_path = path.resolve(__dirname, "./test-img.jpg");
+describe('responsive-image-creator', function() {
+	it('Should create images with given resolutions', async function() {
+		const file_path = path.resolve(__dirname, './test-img.jpg');
 		const resolutions = [200, 300];
 		const resize_data = {
 			image_path: file_path,
 			resolutions,
 			quality: 80,
-			sizes_attr: "100px",
-			alt_tag: "alt_tag",
+			sizes_attr: '100px',
+			alt_tag: 'alt_tag',
 		};
 		await resp_img(resize_data).then(function() {
 			resolutions.forEach(resolution => {
@@ -69,15 +69,15 @@ describe("responsive-image-creator", function() {
 		});
 	});
 
-	it("Should resolve a valid responsive html img tag", async function() {
-		const file_path = path.resolve(__dirname, "./test-img.jpg");
+	it('Should resolve a valid responsive html img tag', async function() {
+		const file_path = path.resolve(__dirname, './test-img.jpg');
 		const resolutions = [200, 300];
 		const resize_data = {
 			image_path: file_path,
 			resolutions,
 			quality: 80,
-			sizes_attr: "100px",
-			alt_tag: "alt_tag",
+			sizes_attr: '100px',
+			alt_tag: 'alt_tag',
 		};
 		const result = await resp_img(resize_data);
 		assert(
