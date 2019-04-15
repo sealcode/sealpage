@@ -1,0 +1,21 @@
+{
+	"name": "sealpage",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"directories": {
+		"example": "examples"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "ssh://git@hub.sealcode.org:62022/diffusion/SEALPAGE/sealpage.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"eslint": "^5.16.0"
+	}
+}
