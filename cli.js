@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const chalk = require('chalk');
+const sealpage = require('./index');
 
 const init = () => {
 	console.log(chalk.green('Sealpage init command'));
@@ -16,6 +17,8 @@ const run = async () => {
 			chalk.black.bgWhiteBright.bold(' Build %s '),
 			process.argv[3]
 		);
+		// sealpage.build()
+
 		break;
 	case 'watch':
 		console.log(

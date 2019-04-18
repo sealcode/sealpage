@@ -1,12 +1,16 @@
-const path = require('path');
-const output = path.resolve(__dirname, './public');
-const sitemap = {
-	index: require('./pages-src/homepage/homepage.html.js'),
-	developers: require('./pages-src/developers/developers.html.js'),
-	products: require('./pages-src/products/products.html.js'),
-	'product-example': require('./pages-src/product-example/product-example.html.js'),
-};
-
 const sealpage = require('../../../index');
 
+const path = require('path');
+const output = path.resolve(__dirname, '../public');
+const sitemap = {
+	index: require('./pages/index.html'),
+	about: require('./pages/about/about.html'),
+	contact: require('./pages/contact/contact.html'),
+	portfolio: require('./pages/portfolio/portfolio.html'),
+};
+
+console.log(sitemap);
+
 sealpage.build(output, sitemap);
+
+console.log('bum');
