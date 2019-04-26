@@ -25,6 +25,7 @@
 		"glob": "^7.1.3",
 		"http-server": "^0.11.1",
 		"locreq": "^1.1.0",
+		"marked": "^0.6.2",
 		"md5-file": "^4.0.0",
 		"node-sass": "^4.11.0",
 		"node-watch": "^0.5.9",
