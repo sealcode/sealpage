@@ -28,7 +28,9 @@
 		"md5-file": "^4.0.0",
 		"node-sass": "^4.11.0",
 		"node-watch": "^0.5.9",
-		"sharp": "^0.21.3"
+		"sealious": "^0.9.5",
+		"sharp": "^0.21.3",
+		"yargs": "^13.2.2"
 	},
 	"devDependencies": {
 		"babel-eslint": "^10.0.1",

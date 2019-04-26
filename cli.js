@@ -1,36 +1,29 @@
 #!/usr/bin/env node
-
-const chalk = require('chalk');
 const sealpage = require('./index');
+const path = require('path');
 
-const init = () => {
-	console.log(chalk.green('Sealpage init command'));
-};
-
-const run = async () => {
-	switch (process.argv[2]) {
-	case undefined:
-		console.log(chalk.red('Please type build or watch'));
-		break;
-	case 'build':
-		console.log(
-			chalk.black.bgWhiteBright.bold(' Build %s '),
-			process.argv[3]
-		);
-		// sealpage.build()
-
-		break;
-	case 'watch':
-		console.log(
-			chalk.black.bgYellowBright.bold(' Watch %s '),
-			process.argv[3]
-		);
-		break;
-	default:
-		break;
-	}
-
-	init();
-};
-
-run();
+require('yargs')
+	.command(
+		'build <sitemap_path> <output_dir>',
+		'start builder',
+		yargs => {
+			return yargs
+				.positional('sitemap_path', {
+					describe: 'The path to sitemap config',
+					type: 'string',
+				})
+				.positional('output_dir', {
+					describe: 'The directory to output',
+					type: 'string',
+				});
+		},
+		argv => {
+			sealpage.build(
+				path.resolve(process.env.PWD, argv.sitemap_path),
+				path.resolve(process.env.PWD, argv.output_dir)
+			);
+		}
+	)
+	.demandCommand()
+	.help()
+	.wrap(80).argv;

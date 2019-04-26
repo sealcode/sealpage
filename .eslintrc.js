@@ -8,11 +8,11 @@ module.exports = {
 	globals: {
 		require: true,
 	},
-	extends: "eslint:recommended",
-	parser: "babel-eslint",
+	extends: 'eslint:recommended',
+	parser: 'babel-eslint',
 	parserOptions: {
 		ecmaVersion: 6,
-		sourceType: "module",
+		sourceType: 'module',
 		ecmaFeatures: {
 			jsx: true,
 			modules: true,
@@ -20,10 +20,11 @@ module.exports = {
 		},
 	},
 	rules: {
-		indent: ["error", "tab"],
-		"linebreak-style": ["error", "unix"],
-		quotes: ["error", "single"],
-		semi: ["error", "always"],
-		"no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
+		indent: ['error', 'tab'],
+		'linebreak-style': ['error', 'unix'],
+		quotes: ['error', 'single'],
+		semi: ['error', 'always'],
+		'no-console': 'off',
+		'no-mixed-spaces-and-tabs': ['error', 'smart-tabs'],
 	},
 };
