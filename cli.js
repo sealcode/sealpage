@@ -17,11 +17,12 @@ require('yargs')
 					type: 'string',
 				});
 		},
-		argv => {
-			sealpage.build(
+		async argv => {
+			await sealpage.build(
 				path.resolve(process.env.PWD, argv.sitemap_path),
 				path.resolve(process.env.PWD, argv.output_dir)
 			);
+			process.exit(0);
 		}
 	)
 	.demandCommand()
