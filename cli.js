@@ -25,6 +25,14 @@ require('yargs')
 			process.exit(0);
 		}
 	)
+	.command(
+		'admin',
+		'starts admin panel',
+		() => {},
+		async argv => {
+			sealpage.runAdmin();
+		}
+	)
 	.demandCommand()
 	.help()
 	.wrap(80).argv;
