@@ -1,10 +1,7 @@
-// import { React, useState, useEffect } from 'react';
+import 'babel-polyfill';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as HashRouter, Route, Link } from 'react-router-dom';
-import 'babel-polyfill';
-
-const React = require('react');
-const { useEffect, useState } = React;
 
 const url = 'http://localhost:8080/api/v1/specifications';
 
@@ -31,7 +28,7 @@ function AppRouter() {
 				<nav>
 					<ul>
 						{collections.map(collection => (
-							<li>
+							<li key={collection.name}>
 								<Link to={`/collection/${collection.name}`}>
 									{collection.name}
 								</Link>
