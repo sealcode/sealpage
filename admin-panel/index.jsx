@@ -5,8 +5,7 @@ import { BrowserRouter as HashRouter, Route, Link } from 'react-router-dom';
 
 import useCollections from './collections/use-collections.js';
 import Collections from './collections/collections.jsx';
-
-const Index = () => <h1>Admin panel</h1>;
+import BodyPageEditor from './body-page-editor/body-page-editor';
 
 function AppRouter() {
 	const collections = useCollections();
@@ -14,7 +13,7 @@ function AppRouter() {
 		<HashRouter basename="/#">
 			<div>
 				<Link to="/">
-					<h1>Admin panel</h1>
+					<h1>Sealpage</h1>
 				</Link>
 				<nav>
 					<ul>
@@ -26,9 +25,15 @@ function AppRouter() {
 							</li>
 						))}
 					</ul>
+					<Link to={'/body-page-editor'}>BodyPageEditor</Link>
 				</nav>
-				<Route path="/" exact component={Index} />
+
+				<hr />
+				<Route path="/" exact component={() => <h2>Admin panel</h2>} />
 				<Route path="/collections" component={Collections} />
+
+				{/* it's only for mockup testing  */}
+				<Route path="/body-page-editor" component={BodyPageEditor} />
 			</div>
 		</HashRouter>
 	);
