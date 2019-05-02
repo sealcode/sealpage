@@ -26,11 +26,20 @@ require('yargs')
 		}
 	)
 	.command(
-		'admin',
+		'admin [sitemap_path]',
 		'starts admin panel',
-		() => {},
+		yargs => {
+			return yargs.positional('sitemap_path', {
+				describe: 'The path to sitemap config',
+				type: 'string',
+				required: true,
+				default: 'index.js',
+			});
+		},
 		async argv => {
-			sealpage.runAdmin();
+			await sealpage.runAdmin(
+				path.resolve(process.env.PWD, argv.sitemap_path)
+			);
 		}
 	)
 	.demandCommand()

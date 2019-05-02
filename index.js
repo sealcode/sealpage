@@ -5,7 +5,7 @@ const renderer = require('./lib/render-site.js');
 const runAdmin = require('./run-admin.js');
 
 const build = async function(sitemap_path, output_dir) {
-	const sitemap = await require(sitemap_path)();
+	const sitemap = (await require(sitemap_path)()).sitemap;
 	return renderer(sitemap, output_dir);
 };
 

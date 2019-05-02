@@ -1,11 +1,12 @@
 const Bundler = require('parcel-bundler');
 const path = require('path');
+const locreq = require('locreq')(__dirname);
 
 const entry_file = path.join(__dirname, './admin-panel/index.html');
 
 // Bundler options
 const options = {
-	outDir: './public', // The out directory to put the build files in, defaults to dist
+	outDir: locreq.resolve('./public-admin'), // The out directory to put the build files in, defaults to dist
 	watch: true, // Whether to watch the files and rebuild them on change, defaults to process.env.NODE_ENV !== 'production'
 	cache: true, // Enabled or disables caching, defaults to true
 	cacheDir: '.cache', // The directory cache gets put in, defaults to .cache
@@ -23,11 +24,16 @@ const options = {
 	detailedReport: false, // Prints a detailed report of the bundles, assets, filesizes and times, defaults to false, reports are only printed if watch is disabled
 };
 
-module.exports = async function() {
+module.exports = async function(sitemap_path) {
 	// Initializes a bundler using the entrypoint location and options provided
+	const app = (await require(sitemap_path)()).app;
+
+	app.WwwServer.static_route(options.outDir, '');
+
 	const bundler = new Bundler(entry_file, options);
 
 	// Run the bundler, this returns the main bundle
 	// Use the events if you're using watch mode as this promise will only trigger once and not for every rebuild
-	const bundle = await bundler.serve();
+
+	await bundler.bundle();
 };
