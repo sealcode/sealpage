@@ -3,53 +3,35 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as HashRouter, Route, Link } from 'react-router-dom';
 
-const url = 'http://localhost:8080/api/v1/specifications';
+import useCollections from './collections/use-collections.js';
+import Collections from './collections/collections.jsx';
 
 const Index = () => <h1>Admin panel</h1>;
 
 function AppRouter() {
-	const [collections, setCollections] = useState([]);
-
-	useEffect(() => {
-		(async function() {
-			const response = await fetch(url, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			});
-			setCollections(await response.json());
-		})();
-	}, []);
-
+	const collections = useCollections();
 	return (
 		<HashRouter basename="/#">
 			<div>
+				<Link to="/">
+					<h1>Admin panel</h1>
+				</Link>
 				<nav>
 					<ul>
 						{collections.map(collection => (
 							<li key={collection.name}>
-								<Link to={`/collection/${collection.name}`}>
+								<Link to={`/collections/${collection.name}`}>
 									{collection.name}
 								</Link>
 							</li>
 						))}
-
-						<li>
-							<Link to="/">Home</Link>
-						</li>
-						<li>
-							<Link to="/about/">About</Link>
-						</li>
 					</ul>
 				</nav>
-
 				<Route path="/" exact component={Index} />
+				<Route path="/collections" component={Collections} />
 			</div>
 		</HashRouter>
 	);
 }
-
-console.log(document.getElementById('app'));
 
 ReactDOM.render(React.createElement(AppRouter), document.getElementById('app'));
