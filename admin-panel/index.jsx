@@ -1,22 +1,58 @@
-import React from 'react';
+// import { React, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as HashRouter, Route, Link } from 'react-router-dom';
+import 'babel-polyfill';
 
-const component = () => <h1>Admin panel</h1>;
+const React = require('react');
+const { useEffect, useState } = React;
+
+const url = 'http://localhost:8080/api/v1/specifications';
+
+const Index = () => <h1>Admin panel</h1>;
+
+function AppRouter() {
+	const [collections, setCollections] = useState([]);
+
+	useEffect(() => {
+		(async function() {
+			const response = await fetch(url, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+			setCollections(await response.json());
+		})();
+	}, []);
+
+	return (
+		<HashRouter basename="/#">
+			<div>
+				<nav>
+					<ul>
+						{collections.map(collection => (
+							<li>
+								<Link to={`/collection/${collection.name}`}>
+									{collection.name}
+								</Link>
+							</li>
+						))}
+
+						<li>
+							<Link to="/">Home</Link>
+						</li>
+						<li>
+							<Link to="/about/">About</Link>
+						</li>
+					</ul>
+				</nav>
+
+				<Route path="/" exact component={Index} />
+			</div>
+		</HashRouter>
+	);
+}
 
 console.log(document.getElementById('app'));
 
-const url = 'http://localhost:8080/api/v1/specifications';
-// const data = { username: 'example' };
-
-fetch(url, {
-	method: 'GET',
-	// body: JSON.stringify(data),
-	headers: {
-		'Content-Type': 'application/json',
-	},
-})
-	.then(res => res.json())
-	.then(response => console.log('Success:', JSON.stringify(response)))
-	.catch(error => console.error('Error:', error));
-
-ReactDOM.render(React.createElement(component), document.getElementById('app'));
+ReactDOM.render(React.createElement(AppRouter), document.getElementById('app'));
