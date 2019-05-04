@@ -1,4 +1,4 @@
-const { useEffect, useState } = require('react');
+const { useState } = require('react');
 
 let collections_cache = [];
 let promise = null;
@@ -37,7 +37,7 @@ export default function useCollections(collection_name) {
 	}
 	return collection_name
 		? collections.filter(
-				collection => collection.name == collection_name
+			collection => collection.name == collection_name
 		  )[0]
 		: collections;
 }

@@ -1,5 +1,5 @@
 import 'babel-polyfill';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as HashRouter, Route, Link } from 'react-router-dom';
 
