@@ -10,9 +10,11 @@ export default class BodyPageEditor extends Component {
 		this.state = {
 			createdComponents: [],
 			renderedHtml: '',
-			value: '',
+			componentType: '',
 		};
 		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.renderPreview = this.renderPreview.bind(this);
 	}
 
 	componentDidMount() {
@@ -20,15 +22,35 @@ export default class BodyPageEditor extends Component {
 	}
 
 	handleChange(event) {
-		this.setState({ value: event.target.value });
+		this.setState({ componentType: event.target.value });
+	}
+
+	handleSubmit(event) {
+		let args = [];
+
+		for (let element of event.target.children) {
+			if (element.type !== 'submit') args.push(element.value);
+			element.value = '';
+		}
+
+		let createdComponents = this.state.createdComponents;
+		createdComponents.push({
+			component: this.state.componentType,
+			args,
+		});
+
+		this.setState({
+			createdComponents,
+		});
 	}
 
 	async renderPreview() {
 		let html = '';
 		for (const segment of this.state.createdComponents) {
 			// TO DO: push data from segment element to function html.js
-			html += await segment();
+			html += await components_map[segment.component](...segment.args);
 		}
+		console.log(html);
 		return html;
 	}
 
@@ -36,9 +58,15 @@ export default class BodyPageEditor extends Component {
 		let form = [];
 		console.log('create component form');
 
-		for (let i = 0; i < components_map[this.state.value].length; i++) {
+		for (
+			let i = 0;
+			i < components_map[this.state.componentType].length;
+			i++
+		) {
 			// TO DO: we have to consider using typescript for components or documented code of parameters to sealpage components
-			form.push(<input type="text" />);
+			form.push(
+				<input type="text" id={`${this.state.componentType}-${i}`} />
+			);
 		}
 		return form;
 	}
@@ -65,9 +93,17 @@ export default class BodyPageEditor extends Component {
 						);
 					})}
 				</select>
-				<div>state select: {this.state.value}</div>
 
-				{this.state.value ? this.createComponentForm() : null}
+				<div>Selected component: {this.state.componentType}</div>
+
+				<form onSubmit={this.handleSubmit}>
+					{this.state.componentType
+						? this.createComponentForm()
+						: null}
+					<input type="submit" value="Submit component" />
+				</form>
+
+				<button onClick={this.renderPreview}>Render preview</button>
 			</React.Fragment>
 		);
 	}
