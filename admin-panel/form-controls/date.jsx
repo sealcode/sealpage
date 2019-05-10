@@ -1,6 +1,6 @@
-import React from 'react';
+const React = require('react');
 
-export default function date(props) {
+module.exports = function date(props) {
 	return (
 		<input
 			id={props.name}
@@ -11,4 +11,4 @@ export default function date(props) {
 			value={props.value}
 		/>
 	);
-}
+};

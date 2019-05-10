@@ -27,6 +27,7 @@
 		"locreq": "^1.1.0",
 		"marked": "^0.6.2",
 		"md5-file": "^4.0.0",
+		"node-jsx": "^0.13.3",
 		"node-sass": "^4.11.0",
 		"node-watch": "^0.5.9",
 		"parcel-bundler": "^1.12.3",

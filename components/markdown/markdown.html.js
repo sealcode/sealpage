@@ -1,6 +1,6 @@
-import Component from '../component.class';
-import formControls from '../../admin-panel/form-controls/form-controls';
-import marked from 'marked';
+const Component = require('../component.class');
+const formControls = require('./../../admin-panel/form-controls/form-controls.jsx');
+const marked = require('marked');
 
 const Markdown = new Component({
 	renderFn: ({ markdown_source }) => {
@@ -11,4 +11,4 @@ const Markdown = new Component({
 	},
 });
 
-export default Markdown;
+module.exports = Markdown;

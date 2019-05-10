@@ -1,4 +1,4 @@
-export default class Component {
+module.exports = class Component {
 	constructor({ renderFn, propsControls }) {
 		if (typeof renderFn !== 'function') {
 			throw new Error('renderFn must be a function');
@@ -23,4 +23,4 @@ export default class Component {
 	async render(propsControls) {
 		return await this.renderFn(propsControls);
 	}
-}
+};

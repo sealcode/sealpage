@@ -1,5 +1,5 @@
-import Component from '../component.class';
-import formControls from '../../admin-panel/form-controls/form-controls';
+const Component = require('../component.class');
+const formControls = require('./../../admin-panel/form-controls/form-controls.jsx');
 
 const Navbar = new Component({
 	renderFn: ({ title }) => {
@@ -12,4 +12,4 @@ const Navbar = new Component({
 	},
 });
 
-export default Navbar;
+module.exports = Navbar;

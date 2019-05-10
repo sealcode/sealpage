@@ -1,6 +1,6 @@
-import React from 'react';
+const React = require('react');
 
-export default function text(props) {
+module.exports = function text(props) {
 	return (
 		<input
 			id={props.name}
@@ -11,4 +11,4 @@ export default function text(props) {
 			value={props.value}
 		/>
 	);
-}
+};

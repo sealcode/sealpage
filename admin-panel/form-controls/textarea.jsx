@@ -1,6 +1,6 @@
-import React from 'react';
+const React = require('react');
 
-export default function textarea(props) {
+module.exports = function textarea(props) {
 	return (
 		<textarea
 			id={props.name}
@@ -10,4 +10,4 @@ export default function textarea(props) {
 			value={props.value}
 		/>
 	);
-}
+};

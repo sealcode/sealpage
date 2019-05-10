@@ -1,7 +1,7 @@
-import date from './date.jsx';
-import text from './text.jsx';
-import textarea from './textarea';
+const date = require('./date.jsx');
+const text = require('./text.jsx');
+const textarea = require('./textarea.jsx');
 
 const FormControls = { text, date, slug: text, textarea };
 
-export default FormControls;
+module.exports = FormControls;
