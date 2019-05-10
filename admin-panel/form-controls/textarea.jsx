@@ -1,13 +1,13 @@
-const React = require('react');
+import React from 'react';
 
 export default function textarea(props) {
 	return (
 		<textarea
-			name={props.name}
 			id={props.name}
-			value={props.value}
+			name={props.name}
 			onChange={e => props.onChange(e.target.value)}
 			required={props.required}
+			value={props.value}
 		/>
 	);
 }

@@ -1,20 +1,16 @@
-const Sealious = require("sealious");
-const assert = require("assert");
+const Sealious = require('sealious');
+const assert = require('assert');
 
 module.exports = app =>
 	app.createChip(Sealious.FieldType, {
-		name: "slug",
-		extends: "text",
+		name: 'slug',
+		extends: 'text',
 		is_proper_value: async (context, params, new_value) => {
-			assert.equal(typeof params.field_to_check, "string");
+			assert.equal(typeof params.field_to_check, 'string');
 
 			const collection_name = params.collection_name;
 
-			assert.equal(typeof collection_name, "string");
-			// await collection.fields[params.field_to_check].is_proper_value(
-			// 	context,
-			// 	new_value
-			// );
+			assert.equal(typeof collection_name, 'string');
 
 			if (params.include_forbidden) {
 				context = new app.Sealious.SuperContext();
@@ -22,8 +18,8 @@ module.exports = app =>
 
 			const matches = (await app.run_action(
 				context,
-				["collections", collection_name],
-				"show",
+				['collections', collection_name],
+				'show',
 				{ filter: { [params.field_to_check]: new_value } }
 			)).items;
 

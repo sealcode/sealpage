@@ -3,9 +3,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as HashRouter, Route, Link } from 'react-router-dom';
 
-import useCollections from './collections/use-collections.js';
-import Collections from './collections/collections.jsx';
 import BodyPageEditor from './body-page-editor/body-page-editor';
+import Collections from './collections/collections.jsx';
+import useCollections from './collections/use-collections.js';
 
 function AppRouter() {
 	const collections = useCollections();

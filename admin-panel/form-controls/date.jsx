@@ -1,14 +1,14 @@
-const React = require('react');
+import React from 'react';
 
 export default function date(props) {
 	return (
 		<input
-			type="date"
-			name={props.name}
-			value={props.value}
 			id={props.name}
+			name={props.name}
 			onChange={e => props.onChange(e.target.value)}
 			required={props.required}
+			type="date"
+			value={props.value}
 		/>
 	);
 }

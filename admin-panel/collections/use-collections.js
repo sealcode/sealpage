@@ -1,8 +1,8 @@
 const { useState } = require('react');
 
 let collections_cache = [];
-let promise = null;
 let loaded = false;
+let promise = null;
 
 const url = 'http://localhost:8080/api/v1/specifications';
 

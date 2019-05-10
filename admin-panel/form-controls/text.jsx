@@ -1,14 +1,14 @@
-const React = require('react');
+import React from 'react';
 
 export default function text(props) {
 	return (
 		<input
-			type="text"
-			name={props.name}
 			id={props.name}
-			value={props.value}
+			name={props.name}
 			onChange={e => props.onChange(e.target.value)}
 			required={props.required}
+			type="text"
+			value={props.value}
 		/>
 	);
 }

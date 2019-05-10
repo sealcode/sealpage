@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 export default function ElementEditor({ component, componentProps, onChange }) {
 	function createControls() {
@@ -22,13 +22,13 @@ export default function ElementEditor({ component, componentProps, onChange }) {
 	return (
 		<div
 			style={{
+				backgroundColor: '#fdf6e3',
 				display: 'flex',
 				flexFlow: 'column',
-				width: '30rem',
 				height: 'auto',
-				padding: '1rem',
 				margin: '1rem',
-				backgroundColor: '#fdf6e3',
+				padding: '1rem',
+				width: '30rem',
 			}}
 		>
 			{createControls()}

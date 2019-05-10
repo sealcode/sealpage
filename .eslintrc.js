@@ -26,5 +26,6 @@ module.exports = {
 		semi: ['error', 'always'],
 		'no-console': 'off',
 		'no-mixed-spaces-and-tabs': ['error', 'smart-tabs'],
+		'react/prop-types': 0,
 	},
 };
