@@ -1,6 +1,24 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 
+async function renderPreview(elements) {
+	let html = '';
+	console.log('elements', elements);
+
+	for (const [component, componentProps] of elements) {
+		console.log(component, componentProps);
+
+		html += await component.render(componentProps);
+	}
+	console.log(html);
+	return html;
+}
 export default function Preview(props) {
+	const [html, setHtml] = useState('');
+
+	useEffect(() => {
+		renderPreview(props.elements).then(setHtml);
+	});
+
 	return (
 		<div
 			style={{
@@ -12,7 +30,7 @@ export default function Preview(props) {
 				margin: '1rem',
 				backgroundColor: '#f1f1f1',
 			}}
-			dangerouslySetInnerHTML={{ __html: props.renderedHtml }}
+			dangerouslySetInnerHTML={{ __html: html }}
 		/>
 	);
 }
