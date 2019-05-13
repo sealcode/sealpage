@@ -19,8 +19,8 @@ function CollectionList({ match }) {
 	return (
 		<div>
 			<Link to={`/collections/${collection_name}/create`}>+create</Link>
-			{items.map(item => (
-				<div>{item.title}</div>
+			{items.map((item, index) => (
+				<div key={index}>{item.title}</div>
 			))}
 		</div>
 	);

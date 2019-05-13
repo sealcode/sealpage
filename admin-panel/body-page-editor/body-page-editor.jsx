@@ -40,7 +40,7 @@ export default function bodyPageEditor() {
 	return (
 		<React.Fragment>
 			<h2>Body Page Editor</h2>
-			<div style={{ display: 'flex', flexFlow: 'row' }}>
+			<div style={{ display: 'flex', flexFlow: 'column' }}>
 				{state.elements.map(([component, componentProps], index) => (
 					<ElementEditor
 						key={index}
