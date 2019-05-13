@@ -1,8 +1,6 @@
 const Bundler = require('parcel-bundler');
 const path = require('path');
 const locreq = require('locreq')(__dirname);
-require('node-jsx').install({ harmony: true });
-
 const entry_file = path.join(__dirname, './admin-panel/index.html');
 
 // Bundler options
