@@ -1,6 +1,10 @@
-import React from 'react';
+const React = require('react');
 
-export default function ElementEditor({ component, componentProps, onChange }) {
+module.exports = function ElementEditor({
+	component,
+	componentProps,
+	onChange,
+}) {
 	function createControls() {
 		let controls = [];
 
@@ -19,9 +23,10 @@ export default function ElementEditor({ component, componentProps, onChange }) {
 		return controls;
 	}
 
-	return (
-		<div
-			style={{
+	return React.createElement(
+		'div',
+		{
+			style: {
 				backgroundColor: '#fdf6e3',
 				display: 'flex',
 				flexFlow: 'column',
@@ -29,9 +34,8 @@ export default function ElementEditor({ component, componentProps, onChange }) {
 				margin: '1rem',
 				padding: '1rem',
 				width: '30rem',
-			}}
-		>
-			{createControls()}
-		</div>
+			},
+		},
+		createControls()
 	);
-}
+};

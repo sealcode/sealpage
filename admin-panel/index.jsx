@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as HashRouter, Route, Link } from 'react-router-dom';
 
-import BodyPageEditor from './body-page-editor/body-page-editor';
+// import BodyPageEditor from './body-page-editor/body-page-editor';
 import Collections from './collections/collections.jsx';
 import useCollections from './collections/use-collections.js';
 
@@ -33,7 +33,7 @@ function AppRouter() {
 				<Route path="/collections" component={Collections} />
 
 				{/* it's only for mockup testing  */}
-				<Route path="/body-page-editor" component={BodyPageEditor} />
+				{/* <Route path="/body-page-editor" component={BodyPageEditor} /> */}
 			</div>
 		</HashRouter>
 	);

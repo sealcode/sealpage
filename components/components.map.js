@@ -1,7 +1,7 @@
-import Markdown from './markdown/markdown.html';
-import Navbar from './navbar/navbar.html';
+const Markdown = require('./markdown/markdown.html');
+const Navbar = require('./navbar/navbar.html');
 
-export default {
+module.exports = {
 	Markdown,
 	Navbar,
 };

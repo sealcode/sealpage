@@ -9,11 +9,12 @@ module.exports = class Component {
 		}
 
 		for (let item in propsControls) {
-			if (typeof propsControls[item] !== 'function') {
-				throw new Error(
-					`${propsControls[item]} formControl is not a function`
-				);
-			}
+			// console.log(item, propsControls);
+			// if (typeof propsControls[item] !== 'function') {
+			// 	throw new Error(
+			// 		`${propsControls[item]} formControl is not a function`
+			// 	);
+			// }
 		}
 
 		this.renderFn = renderFn;
