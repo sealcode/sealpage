@@ -18,8 +18,6 @@ function setElementProps(elements, index, newProps, onChange) {
 module.exports = function bodyPageEditor({ value: elements, onChange }) {
 	const [componentToCreate, setComponentToCreate] = useState(null);
 
-	console.log(elements, typeof elements);
-
 	if (elements === '') elements = [];
 
 	return (

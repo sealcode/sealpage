@@ -10,12 +10,6 @@ module.exports = function ElementEditor({
 		let controls = [];
 
 		for (const prop in component.propsControls) {
-			console.log(
-				component.propsControls,
-				prop,
-				component.propsControls[prop]
-			);
-
 			let formControlName = component.propsControls[prop];
 
 			controls.push(

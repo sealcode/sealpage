@@ -8,7 +8,6 @@ export default function({ match }) {
 	const collection = useCollections(collection_name);
 
 	const [values, setValues] = useState({});
-	const [inputErrors, setInputErrors] = useState({});
 
 	function setValue(key, value) {
 		setValues({ ...values, [key]: value });
@@ -66,11 +65,6 @@ export default function({ match }) {
 				</ul>
 				<input type="submit" />
 			</form>
-			{/* <h2>Body Page Editor</h2>
-			<BodyPageEditor
-				onChange={value => setValue('body', value)} // array-of-objects
-				value={values['body']}
-			/> */}
 		</div>
 	);
 }

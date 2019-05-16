@@ -1,5 +1,4 @@
 const Component = require('../component.class');
-// const formControls = require('./../../admin-panel/form-controls/form-controls.jsx');
 
 const Navbar = new Component({
 	renderFn: ({ title }) => {
@@ -8,7 +7,6 @@ const Navbar = new Component({
 		`;
 	},
 	propsControls: {
-		// title: formControls.text,
 		title: 'text',
 	},
 });
