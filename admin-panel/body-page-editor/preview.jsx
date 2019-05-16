@@ -1,11 +1,12 @@
 const React = require('react');
 const { useState, useEffect } = React;
+const components_map = require('../../components');
 
 async function renderPreview(elements) {
 	let html = '';
 
-	for (const [component, componentProps] of elements) {
-		html += await component.render(componentProps);
+	for (const [componentName, componentProps] of elements) {
+		html += await components_map[componentName].render(componentProps);
 	}
 
 	return html;

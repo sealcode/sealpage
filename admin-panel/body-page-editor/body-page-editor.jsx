@@ -4,10 +4,10 @@ const ElementEditor = require('./element-editor.jsx');
 const Preview = require('./preview.jsx');
 const SelectComponent = require('./select-component.jsx');
 
-const components_map = require('../../components');
+// const components_map = require('../../components');
 
 function addElement(elements, componentToCreate, onChange) {
-	onChange(elements.concat([[components_map[componentToCreate], {}]]));
+	onChange(elements.concat([[componentToCreate, {}]]));
 }
 
 function setElementProps(elements, index, newProps, onChange) {
@@ -23,10 +23,10 @@ module.exports = function bodyPageEditor({ value: elements, onChange }) {
 	return (
 		<React.Fragment>
 			<div style={{ display: 'flex', flexFlow: 'column' }}>
-				{elements.map(([component, componentProps], index) => (
+				{elements.map(([componentName, componentProps], index) => (
 					<ElementEditor
 						key={index}
-						component={component}
+						componentName={componentName}
 						componentProps={componentProps}
 						onChange={newProps =>
 							setElementProps(elements, index, newProps, onChange)

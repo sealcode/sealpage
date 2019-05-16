@@ -4,17 +4,19 @@ const path = require('path');
 
 require('yargs')
 	.command(
-		'build <sitemap_path> <output_dir>',
+		'build [sitemap_path] [output_dir]',
 		'start builder',
 		yargs => {
 			return yargs
 				.positional('sitemap_path', {
 					describe: 'The path to sitemap config',
 					type: 'string',
+					default: 'index.js',
 				})
 				.positional('output_dir', {
 					describe: 'The directory to output',
 					type: 'string',
+					default: 'public',
 				});
 		},
 		async argv => {

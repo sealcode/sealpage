@@ -18,12 +18,13 @@ export default function({ match }) {
 
 	function save(e) {
 		e.preventDefault();
+
 		fetch(`/api/v1/collections/${collection_name}`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ ...values, body: [{}] }),
+			body: JSON.stringify({ ...values }),
 		})
 			.then(response => response.json())
 			.then(
