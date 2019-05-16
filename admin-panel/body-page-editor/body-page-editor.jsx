@@ -1,83 +1,59 @@
-import React, { useReducer } from 'react';
-import ElementEditor from './element-editor';
-import Preview from './preview';
-import SelectComponent from './select-component';
+const React = require('react');
+const useState = React.useState;
+const ElementEditor = require('./element-editor.jsx');
+const Preview = require('./preview.jsx');
+const SelectComponent = require('./select-component.jsx');
 
-import components_map from '../../components/components.map';
+const components_map = require('../../components');
 
-function reducer(state, action) {
-	switch (action.type) {
-	case 'addElement':
-		return {
-			...state,
-			componentToCreate: null,
-			elements: state.elements.concat([
-				[components_map[state.componentToCreate], {}],
-			]),
-		};
-
-	case 'setElementProps':
-		state.elements[action.elementIndex][1] = action.newProps;
-
-		return {
-			...state,
-			elements: state.elements,
-		};
-
-	case 'setComponentToCreate':
-		return {
-			...state,
-			componentToCreate: action.componentToCreate,
-		};
-	}
+function addElement(elements, componentToCreate, onChange) {
+	onChange(elements.concat([[components_map[componentToCreate], {}]]));
 }
-export default function bodyPageEditor() {
-	const [state, dispatch] = useReducer(reducer, {
-		componentToCreate: '',
-		elements: [],
-	});
+
+function setElementProps(elements, index, newProps, onChange) {
+	elements[index][1] = newProps;
+	onChange([...elements]);
+}
+
+module.exports = function bodyPageEditor({ value: elements, onChange }) {
+	const [componentToCreate, setComponentToCreate] = useState(null);
+
+	console.log(elements, typeof elements);
+
+	if (elements === '') elements = [];
 
 	return (
 		<React.Fragment>
-			<h2>Body Page Editor</h2>
 			<div style={{ display: 'flex', flexFlow: 'column' }}>
-				{state.elements.map(([component, componentProps], index) => (
+				{elements.map(([component, componentProps], index) => (
 					<ElementEditor
 						key={index}
 						component={component}
 						componentProps={componentProps}
 						onChange={newProps =>
-							dispatch({
-								type: 'setElementProps',
-								elementIndex: index,
-								newProps,
-							})
+							setElementProps(elements, index, newProps, onChange)
 						}
 					/>
 				))}
 
-				<Preview elements={state.elements} />
+				<Preview elements={elements} />
 			</div>
 
-			<div>{JSON.stringify(state.elements)}</div>
+			<div>{JSON.stringify(elements)}</div>
 
 			<SelectComponent
-				value={state.componentToCreate || ''}
-				onChange={value =>
-					dispatch({
-						type: 'setComponentToCreate',
-						componentToCreate: value,
-					})
-				}
+				value={componentToCreate || ''}
+				onChange={setComponentToCreate}
 			/>
 			<button
-				disabled={!state.componentToCreate}
-				onClick={() => {
-					dispatch({ type: 'addElement' });
+				disabled={!componentToCreate}
+				onClick={e => {
+					e.preventDefault();
+					addElement(elements, componentToCreate, onChange);
 				}}
 			>
 				Add element
 			</button>
 		</React.Fragment>
 	);
-}
+};

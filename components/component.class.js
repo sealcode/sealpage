@@ -9,9 +9,10 @@ module.exports = class Component {
 		}
 
 		for (let item in propsControls) {
-			if (typeof propsControls[item] !== 'function') {
+			console.log(item, propsControls);
+			if (typeof propsControls[item] !== 'string') {
 				throw new Error(
-					`${propsControls[item]} formControl is not a function`
+					`${propsControls[item]} formControl is not a string`
 				);
 			}
 		}
