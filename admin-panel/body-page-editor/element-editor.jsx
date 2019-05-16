@@ -1,4 +1,5 @@
 const React = require('react');
+const formControls = require('./../form-controls/form-controls.jsx');
 
 module.exports = function ElementEditor({
 	component,
@@ -15,8 +16,10 @@ module.exports = function ElementEditor({
 				component.propsControls[prop]
 			);
 
+			let formControlName = component.propsControls[prop];
+
 			controls.push(
-				component.propsControls[prop]({
+				formControls[formControlName]({
 					name: prop,
 					value: componentProps[prop],
 					onChange: newValue => {

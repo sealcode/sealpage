@@ -9,14 +9,13 @@ const build = async function(sitemap_path, output_dir) {
 	return renderer(sitemap, output_dir);
 };
 
-const components = {
-	Navbar: require('./components/navbar/navbar.html.js'),
-	Markdown: require('./components/markdown/markdown.html.js'),
-};
+// const components = {
+// 	Navbar: require('./components/navbar/navbar.html.js'),
+// 	Markdown: require('./components/markdown/markdown.html.js'),
+// };
 
 module.exports = {
 	build,
-	components,
 	getApp,
 	hashFile,
 	pageForEveryItem,
