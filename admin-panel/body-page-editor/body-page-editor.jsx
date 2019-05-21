@@ -4,10 +4,13 @@ const ElementEditor = require('./element-editor.jsx');
 const Preview = require('./preview.jsx');
 const SelectComponent = require('./select-component.jsx');
 
-// const components_map = require('../../components');
-
 function addElement(elements, componentToCreate, onChange) {
 	onChange(elements.concat([[componentToCreate, {}]]));
+}
+
+function removeElement(elements, index, onChange) {
+	elements.splice(index, 1);
+	onChange([...elements]);
 }
 
 function setElementProps(elements, index, newProps, onChange) {
@@ -24,14 +27,30 @@ module.exports = function bodyPageEditor({ value: elements, onChange }) {
 		<React.Fragment>
 			<div style={{ display: 'flex', flexFlow: 'column' }}>
 				{elements.map(([componentName, componentProps], index) => (
-					<ElementEditor
+					<div
 						key={index}
-						componentName={componentName}
-						componentProps={componentProps}
-						onChange={newProps =>
-							setElementProps(elements, index, newProps, onChange)
-						}
-					/>
+						style={{ display: 'flex', flexFlow: 'row' }}
+					>
+						<ElementEditor
+							componentName={componentName}
+							componentProps={componentProps}
+							onChange={newProps =>
+								setElementProps(
+									elements,
+									index,
+									newProps,
+									onChange
+								)
+							}
+						/>
+						<button
+							onClick={() => {
+								removeElement(elements, index, onChange);
+							}}
+						>
+							Remove element
+						</button>
+					</div>
 				))}
 
 				<Preview elements={elements} />
