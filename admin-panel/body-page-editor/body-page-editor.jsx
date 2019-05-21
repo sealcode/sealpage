@@ -13,6 +13,15 @@ function removeElement(elements, index, onChange) {
 	onChange([...elements]);
 }
 
+function changeElementPosition(elements, index, offset, onChange) {
+	elements.splice(
+		Math.min(Math.max(index + offset, 0), elements.length),
+		0,
+		elements.splice(index, 1)[0]
+	);
+	onChange([...elements]);
+}
+
 function setElementProps(elements, index, newProps, onChange) {
 	elements[index][1] = newProps;
 	onChange([...elements]);
@@ -49,6 +58,30 @@ module.exports = function bodyPageEditor({ value: elements, onChange }) {
 							}}
 						>
 							Remove element
+						</button>
+						<button
+							onClick={() => {
+								changeElementPosition(
+									elements,
+									index,
+									-1,
+									onChange
+								);
+							}}
+						>
+							Move up ↑
+						</button>
+						<button
+							onClick={() => {
+								changeElementPosition(
+									elements,
+									index,
+									1,
+									onChange
+								);
+							}}
+						>
+							Move down ↓
 						</button>
 					</div>
 				))}
