@@ -4,27 +4,32 @@ const ElementEditor = require('./element-editor.jsx');
 const Preview = require('./preview.jsx');
 const SelectComponent = require('./select-component.jsx');
 
-function addElement(elements, componentToCreate, onChange) {
-	onChange(elements.concat([[componentToCreate, {}]]));
+function addElement(elements, componentToCreate) {
+	return elements.concat([[componentToCreate, {}]]);
 }
 
-function removeElement(elements, index, onChange) {
+function removeElement(elements, index) {
 	elements.splice(index, 1);
-	onChange([...elements]);
+	return [...elements];
 }
 
-function changeElementPosition(elements, index, offset, onChange) {
+function changeElementPosition(elements, index, offset) {
 	elements.splice(
-		Math.min(Math.max(index + offset, 0), elements.length),
+		minmax(0, elements.length, index + offset),
 		0,
 		elements.splice(index, 1)[0]
 	);
-	onChange([...elements]);
+
+	return [...elements];
 }
 
-function setElementProps(elements, index, newProps, onChange) {
+function setElementProps(elements, index, newProps) {
 	elements[index][1] = newProps;
-	onChange([...elements]);
+	return [...elements];
+}
+
+function minmax(min, max, value) {
+	return Math.min(Math.max(value, min), max);
 }
 
 module.exports = function bodyPageEditor({ value: elements, onChange }) {
@@ -44,40 +49,34 @@ module.exports = function bodyPageEditor({ value: elements, onChange }) {
 							componentName={componentName}
 							componentProps={componentProps}
 							onChange={newProps =>
-								setElementProps(
-									elements,
-									index,
-									newProps,
-									onChange
+								onChange(
+									setElementProps(elements, index, newProps)
 								)
 							}
 						/>
 						<button
-							onClick={() => {
-								removeElement(elements, index, onChange);
+							onClick={e => {
+								e.preventDefault();
+								onChange(removeElement(elements, index));
 							}}
 						>
 							Remove element
 						</button>
 						<button
-							onClick={() => {
-								changeElementPosition(
-									elements,
-									index,
-									-1,
-									onChange
+							onClick={e => {
+								e.preventDefault();
+								onChange(
+									changeElementPosition(elements, index, -1)
 								);
 							}}
 						>
 							Move up ↑
 						</button>
 						<button
-							onClick={() => {
-								changeElementPosition(
-									elements,
-									index,
-									1,
-									onChange
+							onClick={e => {
+								e.preventDefault();
+								onChange(
+									changeElementPosition(elements, index, 1)
 								);
 							}}
 						>
@@ -99,7 +98,7 @@ module.exports = function bodyPageEditor({ value: elements, onChange }) {
 				disabled={!componentToCreate}
 				onClick={e => {
 					e.preventDefault();
-					addElement(elements, componentToCreate, onChange);
+					onChange(addElement(elements, componentToCreate));
 				}}
 			>
 				Add element
