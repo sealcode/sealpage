@@ -17,7 +17,8 @@ module.exports = function ElementEditor({
 			controls.push(
 				formControls[formControlName]({
 					name: prop,
-					value: componentProps[prop],
+					key: prop,
+					value: componentProps[prop] || '',
 					onChange: newValue => {
 						onChange({ ...componentProps, [prop]: newValue });
 					},
