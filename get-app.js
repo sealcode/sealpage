@@ -16,8 +16,6 @@ const manifest = {
 };
 
 async function renderPreview(elements) {
-	console.log(elements);
-
 	let html = '';
 
 	for (const [componentName, componentProps] of elements) {
@@ -38,7 +36,6 @@ module.exports = config => {
 		'POST',
 		'/api/v1/render',
 		async (app, context, { body }) => {
-			console.log('server render', body);
 			return renderPreview(body);
 		}
 	);
