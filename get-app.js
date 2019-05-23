@@ -1,4 +1,5 @@
 const Sealious = require('sealious');
+const components_map = require('./components/index');
 
 const fieldTypes = {
 	slug: require('./field-types/slug'),
@@ -14,12 +15,33 @@ const manifest = {
 	admin_email: 'sealpage_devs@sealcode.org',
 };
 
+async function renderPreview(elements) {
+	console.log(elements);
+
+	let html = '';
+
+	for (const [componentName, componentProps] of elements) {
+		html += await components_map[componentName].render(componentProps);
+	}
+
+	return html;
+}
+
 module.exports = config => {
 	const app = new Sealious.App(config, manifest);
 
 	for (const type in fieldTypes) {
 		fieldTypes[type](app);
 	}
+
+	app.WwwServer.custom_route(
+		'POST',
+		'/api/v1/render',
+		async (app, context, { body }) => {
+			console.log('server render', body);
+			return renderPreview(body);
+		}
+	);
 
 	return app;
 };
