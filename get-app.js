@@ -3,9 +3,11 @@ const components_map = require('./components/index');
 const S = require('./lib/s');
 const path = require('path');
 const fs = require('fs');
-
+const uuidv4 = require('uuid/v4');
 const util = require('util');
 const writeFile = util.promisify(fs.writeFile);
+const exists = util.promisify(fs.access);
+const mkdir = util.promisify(fs.mkdir);
 
 const fieldTypes = {
 	slug: require('./field-types/slug'),
@@ -23,6 +25,18 @@ const manifest = {
 
 async function renderPreview(uuid, elements, config) {
 	let html = '';
+
+	try {
+		await exists('/tmp/sealpage_bundle');
+	} catch (error) {
+		await mkdir('/tmp/sealpage_bundle');
+	}
+
+	try {
+		await exists(`/tmp/sealpage_bundle/${uuid}`);
+	} catch (error) {
+		await mkdir(`/tmp/sealpage_bundle/${uuid}`);
+	}
 
 	let output_dir = path.resolve(`/tmp/sealpage_bundle/${uuid}`);
 
@@ -47,7 +61,7 @@ async function renderPreview(uuid, elements, config) {
 
 	await writeFile(`${output_dir}/index.html`, html);
 
-	return `${manifest.base_url}/previews/${uuid}/index.html`;
+	return `/previews/${uuid}/index.html?${uuidv4()}`;
 	// return html;
 }
 

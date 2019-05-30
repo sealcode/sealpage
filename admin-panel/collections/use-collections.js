@@ -4,7 +4,7 @@ let collections_cache = [];
 let loaded = false;
 let promise = null;
 
-const url = 'http://localhost:8080/api/v1/specifications';
+const url = '/api/v1/specifications';
 
 export default function useCollections(collection_name) {
 	const [collections, setCollections] = useState(collections_cache);
