@@ -10,9 +10,10 @@ module.exports = function ElementEditor({
 	function createControls() {
 		let controls = [];
 
-		for (const prop in components_map[componentName].propsControls) {
-			let formControlName =
-				components_map[componentName].propsControls[prop];
+		let propsControls = components_map[componentName].propsControls();
+
+		for (const prop in propsControls) {
+			let formControlName = propsControls[prop];
 
 			controls.push(
 				formControls[formControlName]({

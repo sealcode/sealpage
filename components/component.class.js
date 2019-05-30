@@ -1,26 +1,9 @@
 module.exports = class Component {
-	constructor({ renderFn, propsControls }) {
-		if (typeof renderFn !== 'function') {
-			throw new Error('renderFn must be a function');
-		}
-
-		if (typeof propsControls !== 'object') {
-			throw new Error('propsControls must be an object');
-		}
-
-		for (let item in propsControls) {
-			if (typeof propsControls[item] !== 'string') {
-				throw new Error(
-					`${propsControls[item]} formControl is not a string`
-				);
-			}
-		}
-
-		this.renderFn = renderFn;
-		this.propsControls = propsControls;
+	constructor(s) {
+		this.s = s;
 	}
 
-	async render(propsControls) {
-		return await this.renderFn(propsControls);
+	async render(props) {
+		return await this.renderFn(this.s, props);
 	}
 };
