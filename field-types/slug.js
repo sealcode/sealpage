@@ -5,7 +5,8 @@ module.exports = app =>
 	app.createChip(Sealious.FieldType, {
 		name: 'slug',
 		extends: 'text',
-		is_proper_value: async (context, params, new_value) => {
+		old_value_sensitive: true,
+		is_proper_value: async (context, params, new_value, old_value) => {
 			assert.equal(typeof params.field_to_check, 'string');
 
 			const collection_name = params.collection_name;
@@ -14,6 +15,10 @@ module.exports = app =>
 
 			if (params.include_forbidden) {
 				context = new app.Sealious.SuperContext();
+			}
+
+			if (new_value === old_value) {
+				return Promise.resolve();
 			}
 
 			const matches = (await app.run_action(
@@ -27,9 +32,8 @@ module.exports = app =>
 				return Promise.reject(
 					`There's already an item in ${collection_name} with ${
 						params.field_to_check
-					} set to ${new_value}`
+					} set to ${new_value}, old value: ${old_value}`
 				);
 			}
-			return Promise.resolve();
 		},
 	});

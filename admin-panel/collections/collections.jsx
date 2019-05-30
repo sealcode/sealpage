@@ -20,7 +20,14 @@ function CollectionList({ match }) {
 		<div>
 			<Link to={`/collections/${collection_name}/create`}>+create</Link>
 			{items.map((item, index) => (
-				<div key={index}>{item.title}</div>
+				<React.Fragment key={index}>
+					<div>{item.title}</div>
+					<Link
+						to={`/collections/${collection_name}/edit/${item.id}`}
+					>
+						edit
+					</Link>
+				</React.Fragment>
 			))}
 		</div>
 	);
@@ -44,7 +51,12 @@ function Collections({ match }) {
 			<Route path={`${match.path}/:collection`} component={Collection} />
 			<Route
 				exact
-				path={`${match.path}/:collection/create`}
+				path={`${match.path}/:collection/:mode`}
+				component={CreateCollectionItem}
+			/>
+			<Route
+				exact
+				path={`${match.path}/:collection/:mode/:id`}
 				component={CreateCollectionItem}
 			/>
 			<Route

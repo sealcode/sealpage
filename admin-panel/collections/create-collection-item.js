@@ -1,36 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import useCollections from './use-collections.js';
 import FormControls from '../form-controls/form-controls.jsx';
 
 export default function({ match }) {
-	const collection_name = match.params.collection;
-	const collection = useCollections(collection_name);
-
+	const { id, collection, mode } = match.params;
+	const _collection = useCollections(collection);
 	const [values, setValues] = useState({});
+
+	useEffect(() => {
+		async function fetchData() {
+			const query = await fetch(
+				`/api/v1/collections/${collection}/${id}`
+			);
+			const data = await query.json();
+			setValues({ ...data });
+		}
+		if (mode === 'edit') {
+			fetchData();
+		}
+	}, []);
 
 	function setValue(key, value) {
 		setValues({ ...values, [key]: value });
 	}
-	if (!collection) {
+	if (!_collection) {
 		return <div>Loading...</div>;
 	}
 
-	function save(e) {
-		e.preventDefault();
+	async function save(event) {
+		event.preventDefault();
+		let api_endpoint = `/api/v1/collections/${collection}`;
 
-		fetch(`/api/v1/collections/${collection_name}`, {
-			method: 'POST',
+		if (mode === 'edit') {
+			api_endpoint += `/${id}`;
+		}
+
+		//Filter out unnecessary fields from values
+		const body = {};
+		Object.keys(values).forEach(key => {
+			if (_collection.fields[key]) {
+				body[key] = values[key];
+			}
+		});
+
+		const query = await fetch(api_endpoint, {
+			method: mode === 'edit' ? 'PUT' : 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ ...values }),
-		})
-			.then(response => response.json())
-			.then(
-				() =>
-					(document.location.hash = `/collections/${collection_name}`)
+			body: JSON.stringify(body),
+		});
+
+		const response = await query.json();
+		if (response.sealious_error) {
+			alert(response.message);
+			console.log(response);
+		} else {
+			alert(
+				`Successfully ${mode === 'edit' ? 'edited' : 'created'} ${
+					values.title
+				}`
 			);
+			document.location.hash = `/collections/${collection}`;
+		}
 	}
 
 	return (
@@ -39,7 +72,7 @@ export default function({ match }) {
 			<form onSubmit={save}>
 				{JSON.stringify(values)}
 				<ul>
-					{Object.entries(collection.fields).map(
+					{Object.entries(_collection.fields).map(
 						([field_name, field]) => (
 							<label
 								htmlFor={field_name}
