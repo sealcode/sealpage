@@ -23,8 +23,9 @@ const manifest = {
 	admin_email: 'sealpage_devs@sealcode.org',
 };
 
-async function renderPreview(uuid, elements, config) {
+async function renderPreview(uuid, elements) {
 	let html = '';
+	let temporary_path = `/tmp/sealpage_bundle/${uuid}`;
 
 	try {
 		await exists('/tmp/sealpage_bundle');
@@ -33,20 +34,17 @@ async function renderPreview(uuid, elements, config) {
 	}
 
 	try {
-		await exists(`/tmp/sealpage_bundle/${uuid}`);
+		await exists(temporary_path);
 	} catch (error) {
-		await mkdir(`/tmp/sealpage_bundle/${uuid}`);
+		await mkdir(temporary_path);
 	}
 
-	let output_dir = path.resolve(`/tmp/sealpage_bundle/${uuid}`);
+	let output_dir = path.resolve(temporary_path);
 
 	const component_instances = {};
 	const s = new S({ output_dir });
 
-	console.log(config);
-
-	// creating instances
-
+	// creating componentsinstances
 	for (const component_name in components_map) {
 		component_instances[component_name] = new components_map[
 			component_name
@@ -54,7 +52,6 @@ async function renderPreview(uuid, elements, config) {
 	}
 
 	// render preview using component instances
-
 	for (const [componentName, componentProps] of elements) {
 		html += await component_instances[componentName].render(componentProps);
 	}
@@ -62,7 +59,6 @@ async function renderPreview(uuid, elements, config) {
 	await writeFile(`${output_dir}/index.html`, html);
 
 	return `/previews/${uuid}/index.html?${uuidv4()}`;
-	// return html;
 }
 
 module.exports = config => {
@@ -81,7 +77,7 @@ module.exports = config => {
 		'POST',
 		'/api/v1/render',
 		async (app, context, { uuid, body }) => {
-			return renderPreview(uuid.replace(/(\.|\/)/g, '-'), body, config);
+			return renderPreview(uuid.replace(/(\.|\/)/g, '-'), body);
 		}
 	);
 
