@@ -4,6 +4,8 @@ const ElementEditor = require('./element-editor.jsx');
 const Preview = require('./preview.jsx');
 const SelectComponent = require('./select-component.jsx');
 
+import './body-page-editor.scss';
+
 function addElement(elements, componentToCreate) {
 	return elements.concat([[componentToCreate, {}]]);
 }
@@ -38,55 +40,47 @@ module.exports = function bodyPageEditor({ value: elements, onChange }) {
 	if (elements === '') elements = [];
 
 	return (
-		<React.Fragment>
-			<div style={{ display: 'flex', flexFlow: 'column' }}>
-				{elements.map(([componentName, componentProps], index) => (
-					<div
-						key={index}
-						style={{ display: 'flex', flexFlow: 'row' }}
+		<div className="editor">
+			{elements.map(([componentName, componentProps], index) => (
+				<div className="container" key={index}>
+					<ElementEditor
+						componentName={componentName}
+						componentProps={componentProps}
+						onChange={newProps =>
+							onChange(setElementProps(elements, index, newProps))
+						}
+					/>
+					<button
+						onClick={e => {
+							e.preventDefault();
+							onChange(removeElement(elements, index));
+						}}
 					>
-						<ElementEditor
-							componentName={componentName}
-							componentProps={componentProps}
-							onChange={newProps =>
-								onChange(
-									setElementProps(elements, index, newProps)
-								)
-							}
-						/>
-						<button
-							onClick={e => {
-								e.preventDefault();
-								onChange(removeElement(elements, index));
-							}}
-						>
-							Remove element
-						</button>
-						<button
-							onClick={e => {
-								e.preventDefault();
-								onChange(
-									changeElementPosition(elements, index, -1)
-								);
-							}}
-						>
-							Move up ↑
-						</button>
-						<button
-							onClick={e => {
-								e.preventDefault();
-								onChange(
-									changeElementPosition(elements, index, 1)
-								);
-							}}
-						>
-							Move down ↓
-						</button>
-					</div>
-				))}
+						Remove element
+					</button>
+					<button
+						onClick={e => {
+							e.preventDefault();
+							onChange(
+								changeElementPosition(elements, index, -1)
+							);
+						}}
+					>
+						Move up ↑
+					</button>
+					<button
+						onClick={e => {
+							e.preventDefault();
+							onChange(changeElementPosition(elements, index, 1));
+						}}
+						dasdsadasdasda
+					>
+						Move down ↓
+					</button>
+				</div>
+			))}
 
-				<Preview elements={elements} />
-			</div>
+			<Preview elements={elements} />
 
 			<div>{JSON.stringify(elements)}</div>
 
@@ -103,6 +97,6 @@ module.exports = function bodyPageEditor({ value: elements, onChange }) {
 			>
 				Add element
 			</button>
-		</React.Fragment>
+		</div>
 	);
 };

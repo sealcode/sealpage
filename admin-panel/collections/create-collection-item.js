@@ -71,32 +71,31 @@ export default function({ match }) {
 			<h2>Metadata Editor</h2>
 			<form onSubmit={save}>
 				{JSON.stringify(values)}
-				<ul>
-					{Object.entries(_collection.fields).map(
-						([field_name, field]) => (
-							<label
-								htmlFor={field_name}
-								style={{ display: 'block' }}
-								key={field_name}
-							>
-								{field_name}
-								{FormControls[field.type.name]
-									? /* eslint-disable indent */
-									  React.createElement(
-											FormControls[field.type.name],
-											{
-												...field,
-												onChange: value =>
-													setValue(field_name, value),
-												value: values[field_name] || '',
-											}
-									  )
-									: /* eslint-enable indent */
-									  `: ${field.type.name}`}
-							</label>
-						)
-					)}
-				</ul>
+				<hr />
+				{Object.entries(_collection.fields).map(
+					([field_name, field]) => (
+						<label
+							htmlFor={field_name}
+							style={{ display: 'block' }}
+							key={field_name}
+						>
+							{field_name}
+							{FormControls[field.type.name]
+								? /* eslint-disable indent */
+								  React.createElement(
+										FormControls[field.type.name],
+										{
+											...field,
+											onChange: value =>
+												setValue(field_name, value),
+											value: values[field_name] || '',
+										}
+								  )
+								: /* eslint-enable indent */
+								  `: ${field.type.name}`}
+						</label>
+					)
+				)}
 				<input type="submit" />
 			</form>
 		</div>
