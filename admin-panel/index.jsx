@@ -6,12 +6,16 @@ import { BrowserRouter as HashRouter, Route, Link } from 'react-router-dom';
 import Collections from './collections/collections.jsx';
 import useCollections from './collections/use-collections.js';
 
+import './remedy.css';
+import './index.scss';
+
 function AppRouter() {
 	const collections = useCollections();
 	return (
 		<HashRouter basename="/#">
 			<div>
 				<Link to="/">
+					<div className="sealpage-logo" />
 					<h1>Sealpage</h1>
 				</Link>
 				<nav>
@@ -24,15 +28,11 @@ function AppRouter() {
 							</li>
 						))}
 					</ul>
-					<Link to={'/body-page-editor'}>BodyPageEditor</Link>
 				</nav>
 
 				<hr />
 				<Route path="/" exact component={() => <h2>Admin panel</h2>} />
 				<Route path="/collections" component={Collections} />
-
-				{/* it's only for mockup testing  */}
-				{/* <Route path="/body-page-editor" component={BodyPageEditor} /> */}
 			</div>
 		</HashRouter>
 	);

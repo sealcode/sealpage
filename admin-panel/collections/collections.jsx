@@ -18,7 +18,11 @@ function CollectionList({ match }) {
 
 	return (
 		<div>
-			<Link to={`/collections/${collection_name}/create`}>+create</Link>
+			<Link to={`/collections/${collection_name}/create`}>
+				Create new item in collection
+			</Link>
+
+			<h3>Items: </h3>
 			{items.map((item, index) => (
 				<React.Fragment key={index}>
 					<div>{item.title}</div>
@@ -38,7 +42,7 @@ function Collection({ match }) {
 
 	return (
 		<div>
-			<h2>{collection_name}</h2>
+			<h3>Selected collection: {collection_name}</h3>
 			<Route exact path={match.path} component={CollectionList} />
 		</div>
 	);
@@ -47,7 +51,7 @@ function Collection({ match }) {
 function Collections({ match }) {
 	return (
 		<div>
-			Collections
+			<h2>Collections</h2>
 			<Route path={`${match.path}/:collection`} component={Collection} />
 			<Route
 				exact

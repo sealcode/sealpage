@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import useCollections from './use-collections.js';
 import FormControls from '../form-controls/form-controls.jsx';
 
+import './create-collection-item.scss';
+
 export default function({ match }) {
 	const { id, collection, mode } = match.params;
 	const _collection = useCollections(collection);
@@ -36,7 +38,7 @@ export default function({ match }) {
 			api_endpoint += `/${id}`;
 		}
 
-		//Filter out unnecessary fields from values
+		// Filter out unnecessary fields from values
 		const body = {};
 		Object.keys(values).forEach(key => {
 			if (_collection.fields[key]) {
@@ -68,23 +70,25 @@ export default function({ match }) {
 
 	return (
 		<div>
-			<h2>Metadata Editor</h2>
-			<form onSubmit={save}>
-				{JSON.stringify(values)}
-				<hr />
+			{/* <h2>Metadata Editor</h2>
+			<pre>{JSON.stringify(values)}</pre> */}
+			<hr />
+			<form className="form" onSubmit={save}>
+				<div className="form__up-bar" />
 				{Object.entries(_collection.fields).map(
 					([field_name, field]) => (
 						<label
+							className="field"
 							htmlFor={field_name}
-							style={{ display: 'block' }}
 							key={field_name}
 						>
-							{field_name}
 							{FormControls[field.type.name]
 								? /* eslint-disable indent */
 								  React.createElement(
 										FormControls[field.type.name],
 										{
+											className: 'field__control',
+											placeholder: field_name,
 											...field,
 											onChange: value =>
 												setValue(field_name, value),
