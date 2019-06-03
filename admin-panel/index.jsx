@@ -11,29 +11,31 @@ import './index.scss';
 
 function AppRouter() {
 	const collections = useCollections();
+
 	return (
 		<HashRouter basename="/#">
-			<div>
+			<header className="header">
 				<Link to="/">
 					<div className="sealpage-logo" />
-					<h1>Sealpage</h1>
 				</Link>
-				<nav>
-					<ul>
-						{collections.map(collection => (
-							<li key={collection.name}>
-								<Link to={`/collections/${collection.name}`}>
-									{collection.name}
-								</Link>
-							</li>
-						))}
-					</ul>
-				</nav>
+				Sealpage
+			</header>
 
-				<hr />
-				<Route path="/" exact component={() => <h2>Admin panel</h2>} />
-				<Route path="/collections" component={Collections} />
-			</div>
+			<nav>
+				<ul>
+					{collections.map(collection => (
+						<li key={collection.name}>
+							<Link to={`/collections/${collection.name}`}>
+								{collection.name}
+							</Link>
+						</li>
+					))}
+				</ul>
+			</nav>
+
+			<hr />
+			<Route path="/" exact component={() => <h2>Admin panel</h2>} />
+			<Route path="/collections" component={Collections} />
 		</HashRouter>
 	);
 }

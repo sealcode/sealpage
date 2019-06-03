@@ -2,14 +2,15 @@
 	display: flex;
 	flex-flow: column;
 	background-color: #fff;
-	box-shadow: 0 -1px 3rem rgba(0, 0, 0, 0.12);
+	box-shadow: 0 -1px 3rem #65397cff;
 	width: 80vw;
 	margin: 0 auto;
+	border: 1px solid #65397cff;
 
 	&__up-bar {
 		cursor: row-resize;
 		padding: 0.5rem 0;
-		background: #5294a1;
+		background: #e7cc00ff;
 	}
 }
 
