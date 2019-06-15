@@ -1,5 +1,5 @@
 const Sealious = require('sealious');
-const components_map = require('./components/index');
+const components = require('./components/index').components;
 
 const fieldTypes = {
 	slug: require('./field-types/slug'),
@@ -19,7 +19,7 @@ async function renderPreview(elements) {
 	let html = '';
 
 	for (const [componentName, componentProps] of elements) {
-		html += await components_map[componentName].render(componentProps);
+		html += await components[componentName].render(componentProps);
 	}
 
 	return html;

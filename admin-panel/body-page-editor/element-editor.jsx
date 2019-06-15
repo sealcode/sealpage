@@ -1,6 +1,6 @@
 const React = require('react');
 const formControls = require('./../form-controls/form-controls.jsx');
-const components_map = require('../../components');
+const { components } = require('../../components');
 
 module.exports = function ElementEditor({
 	componentName,
@@ -10,9 +10,8 @@ module.exports = function ElementEditor({
 	function createControls() {
 		let controls = [];
 
-		for (const prop in components_map[componentName].propsControls) {
-			let formControlName =
-				components_map[componentName].propsControls[prop];
+		for (const prop in components[componentName].propsControls) {
+			let formControlName = components[componentName].propsControls[prop];
 
 			controls.push(
 				formControls[formControlName]({

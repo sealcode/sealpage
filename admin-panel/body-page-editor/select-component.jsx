@@ -1,7 +1,6 @@
 const React = require('react');
-
 const e = React.createElement;
-const components_map = require('../../components/index.js');
+const { components } = require('../../components/index.js');
 
 module.exports = function selectComponent(props) {
 	return e(
@@ -20,7 +19,7 @@ module.exports = function selectComponent(props) {
 			},
 			'--Please choose an option--'
 		),
-		Object.keys(components_map).map(function(component) {
+		Object.keys(components).map(function(component) {
 			return e(
 				'option',
 				{
