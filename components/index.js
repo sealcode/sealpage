@@ -1,9 +1,11 @@
 const Markdown = require('./markdown/markdown.html');
 const Navbar = require('./navbar/navbar.html');
-const DownloadFileButton = require('./download-file-button/download-file-button.html');
+const DownloadFileButton = require('./download-file-button/download-file-button');
+const ResponsiveImage = require('./responsive-image/responsive-image');
 
 module.exports = {
 	Markdown,
 	Navbar,
 	DownloadFileButton,
+	ResponsiveImage,
 };

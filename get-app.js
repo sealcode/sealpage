@@ -42,7 +42,8 @@ async function renderPreview(uuid, elements) {
 	let output_dir = path.resolve(temporary_path);
 
 	const component_instances = {};
-	const s = new S({ output_dir });
+	const path_prefix = `/previews/${uuid}`;
+	const s = new S({ output_dir, path_prefix });
 
 	// creating componentsinstances
 	for (const component_name in components_map) {
@@ -58,7 +59,7 @@ async function renderPreview(uuid, elements) {
 
 	await writeFile(`${output_dir}/index.html`, html);
 
-	return `/previews/${uuid}/index.html?${uuidv4()}`;
+	return `${path_prefix}/index.html?${uuidv4()}`;
 }
 
 module.exports = config => {
