@@ -42,7 +42,7 @@ class ResponsiveImage extends Component {
 
 		for (let resolution of resolutions) {
 			const path = await s.addOutputFile({
-				output_subdir: `images`,
+				output_subdir: 'images',
 				base_name: `${image_basename}-${resolution}.${extension}`,
 				generator: () =>
 					sharp(locreq.resolve(image_path))
