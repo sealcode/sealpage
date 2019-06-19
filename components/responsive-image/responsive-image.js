@@ -19,12 +19,12 @@ class ResponsiveImage extends Component {
 			alt = '',
 		}
 	) {
-		const sharp = s.require('sharp');
-		const path = s.require('path');
-		const { promisify } = s.require('util');
-		const locreq = s.require('locreq')(__dirname);
-		const fs = s.require('fs');
-		const hashFile = s.require(
+		const sharp = s.node_require('sharp');
+		const path = s.node_require('path');
+		const { promisify } = s.node_require('util');
+		const locreq = s.node_require('locreq')(__dirname);
+		const fs = s.node_require('fs');
+		const hashFile = s.node_require(
 			path.resolve(__dirname, '../../lib/hash-file.js')
 		);
 		if (!image_path) {

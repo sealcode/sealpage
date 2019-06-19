@@ -2,9 +2,9 @@ const Component = require('../component.class');
 
 class DownloadFileButton extends Component {
 	async renderFn(s, { text }) {
-		const fs = s.require('fs');
-		const util = s.require('util');
-		const path = s.require('path');
+		const fs = s.node_require('fs');
+		const util = s.node_require('util');
+		const path = s.node_require('path');
 
 		const readFile = util.promisify(fs.readFile);
 		/* eslint-disable indent */
