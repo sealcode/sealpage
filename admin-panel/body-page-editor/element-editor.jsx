@@ -10,18 +10,22 @@ module.exports = function ElementEditor({
 	function createControls() {
 		let controls = [];
 
-		for (const prop in components[componentName].propsControls) {
-			let formControlName = components[componentName].propsControls[prop];
+		let propsControls = components[componentName].propsControls();
 
+		for (const prop in propsControls) {
+			let { control: formControlName, label } = propsControls[prop];
 			controls.push(
-				formControls[formControlName]({
-					name: prop,
-					key: prop,
-					value: componentProps[prop] || '',
-					onChange: newValue => {
-						onChange({ ...componentProps, [prop]: newValue });
-					},
-				})
+				<label>
+					{label}:
+					{formControls[formControlName]({
+						name: prop,
+						key: prop,
+						value: componentProps[prop] || '',
+						onChange: newValue => {
+							onChange({ ...componentProps, [prop]: newValue });
+						},
+					})}
+				</label>
 			);
 		}
 

@@ -6,35 +6,78 @@ import { BrowserRouter as HashRouter, Route, Link } from 'react-router-dom';
 import Collections from './collections/collections.jsx';
 import useCollections from './collections/use-collections.js';
 
+class ErrorBoundary extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = { hasError: false, error: null };
+	}
+
+	static getDerivedStateFromError(error) {
+		return { hasError: true, error: error };
+	}
+
+	componentDidCatch(error, info) {
+		console.error(error, info);
+	}
+
+	render() {
+		if (this.state.hasError) {
+			// You can render any custom fallback UI
+			return (
+				<div>
+					<h1>Something went wrong.</h1>
+					<code>
+						<pre>
+							<strong>{this.state.error.message}</strong>
+							{'\n'}
+							{this.state.error.stack}
+						</pre>
+					</code>
+				</div>
+			);
+		}
+
+		return this.props.children;
+	}
+}
+
 function AppRouter() {
 	const collections = useCollections();
 	return (
-		<HashRouter basename="/#">
-			<div>
-				<Link to="/">
-					<h1>Sealpage</h1>
-				</Link>
-				<nav>
-					<ul>
-						{collections.map(collection => (
-							<li key={collection.name}>
-								<Link to={`/collections/${collection.name}`}>
-									{collection.name}
-								</Link>
-							</li>
-						))}
-					</ul>
-					<Link to={'/body-page-editor'}>BodyPageEditor</Link>
-				</nav>
+		<ErrorBoundary>
+			<HashRouter basename="/#">
+				<div>
+					<Link to="/">
+						<h1>Sealpage</h1>
+					</Link>
+					<nav>
+						<ul>
+							{collections.map(collection => (
+								<li key={collection.name}>
+									<Link
+										to={`/collections/${collection.name}`}
+									>
+										{collection.name}
+									</Link>
+								</li>
+							))}
+						</ul>
+						<Link to={'/body-page-editor'}>BodyPageEditor</Link>
+					</nav>
 
-				<hr />
-				<Route path="/" exact component={() => <h2>Admin panel</h2>} />
-				<Route path="/collections" component={Collections} />
+					<hr />
+					<Route
+						path="/"
+						exact
+						component={() => <h2>Admin panel</h2>}
+					/>
+					<Route path="/collections" component={Collections} />
 
-				{/* it's only for mockup testing  */}
-				{/* <Route path="/body-page-editor" component={BodyPageEditor} /> */}
-			</div>
-		</HashRouter>
+					{/* it's only for mockup testing  */}
+					{/* <Route path="/body-page-editor" component={BodyPageEditor} /> */}
+				</div>
+			</HashRouter>
+		</ErrorBoundary>
 	);
 }
 

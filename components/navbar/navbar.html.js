@@ -1,14 +1,16 @@
 const Component = require('../component.class');
 
-const Navbar = new Component({
-	renderFn: ({ title }) => {
+class Navbar extends Component {
+	renderFn(s, { title }) {
 		return /* HTML */ `
 			<nav>${title}</nav>
 		`;
-	},
-	propsControls: {
-		title: 'text',
-	},
-});
+	}
+	static propsControls() {
+		return {
+			title: { label: 'Title', control: 'text' },
+		};
+	}
+}
 
 module.exports = Navbar;

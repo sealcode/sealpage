@@ -1,4 +1,12 @@
 const Sealious = require('sealious');
+const S = require('./lib/s');
+const path = require('path');
+const fs = require('fs');
+const uuidv4 = require('uuid/v4');
+const util = require('util');
+const writeFile = util.promisify(fs.writeFile);
+const exists = util.promisify(fs.access);
+const mkdir = util.promisify(fs.mkdir);
 const components = require('./components/index').components;
 
 const fieldTypes = {
@@ -15,14 +23,41 @@ const manifest = {
 	admin_email: 'sealpage_devs@sealcode.org',
 };
 
-async function renderPreview(elements) {
+async function renderPreview(uuid, elements) {
 	let html = '';
+	let temporary_path = `/tmp/sealpage_bundle/${uuid}`;
 
-	for (const [componentName, componentProps] of elements) {
-		html += await components[componentName].render(componentProps);
+	try {
+		await exists('/tmp/sealpage_bundle');
+	} catch (error) {
+		await mkdir('/tmp/sealpage_bundle');
 	}
 
-	return html;
+	try {
+		await exists(temporary_path);
+	} catch (error) {
+		await mkdir(temporary_path);
+	}
+
+	let output_dir = path.resolve(temporary_path);
+
+	const component_instances = {};
+	const path_prefix = `/previews/${uuid}`;
+	const s = new S({ output_dir, path_prefix });
+
+	// creating componentsinstances
+	for (const component_name in components) {
+		component_instances[component_name] = new components[component_name](s);
+	}
+
+	// render preview using component instances
+	for (const [componentName, componentProps] of elements) {
+		html += await component_instances[componentName].render(componentProps);
+	}
+
+	await writeFile(`${output_dir}/index.html`, html);
+
+	return `${path_prefix}/index.html?${uuidv4()}`;
 }
 
 module.exports = config => {
@@ -32,11 +67,16 @@ module.exports = config => {
 		fieldTypes[type](app);
 	}
 
+	app.WwwServer.static_route(
+		'/tmp/sealpage_bundle', // system path
+		'/previews' // url
+	);
+
 	app.WwwServer.custom_route(
 		'POST',
 		'/api/v1/render',
-		async (app, context, { body }) => {
-			return renderPreview(body);
+		async (app, context, { uuid, body }) => {
+			return renderPreview(uuid.replace(/(\.|\/)/g, '-'), body);
 		}
 	);
 

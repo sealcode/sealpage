@@ -22,7 +22,9 @@
 		"glob": "^7.1.3",
 		"http-server": "^0.11.1",
 		"locreq": "^1.1.0",
+		"make-dir": "^3.0.0",
 		"marked": "^0.6.2",
+		"md5": "^2.2.1",
 		"md5-file": "^4.0.0",
 		"node-jsx": "^0.13.3",
 		"node-sass": "^4.11.0",
@@ -30,8 +32,9 @@
 		"react": "^16.8.6",
 		"react-dom": "^16.8.6",
 		"react-router-dom": "^5.0.0",
-		"sealious": "sealcode/sealious#e311447ce5ead8462a8150bd6",
+		"sealious": "sealcode/sealious#39b71ca55fa8b49aa548e8f0e9",
 		"sharp": "^0.21.3",
+		"uuid": "^3.3.2",
 		"yargs": "^13.2.2"
 	},
 	"devDependencies": {
