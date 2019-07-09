@@ -5,6 +5,9 @@ import { BrowserRouter as HashRouter, Route, Link } from 'react-router-dom';
 
 import Collections from './collections/collections.jsx';
 import useCollections from './collections/use-collections.js';
+import Navbar from './navbar/navbar';
+
+import './styles.scss';
 
 class ErrorBoundary extends React.Component {
 	constructor(props) {
@@ -46,6 +49,7 @@ function AppRouter() {
 	return (
 		<ErrorBoundary>
 			<HashRouter basename="/#">
+				<Navbar />
 				<div>
 					<Link to="/">
 						<h1>Sealpage</h1>

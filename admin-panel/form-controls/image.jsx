@@ -4,7 +4,6 @@ const { useState } = React;
 module.exports = function date(props) {
 	const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
 	const [imageFile, setImageFile] = useState(null);
-
 	return (
 		<div>
 			<input

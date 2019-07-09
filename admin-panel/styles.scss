@@ -1,0 +1,12 @@
+@import './navbar/navbar';
+
+html {
+	font-size: 1.5em;
+}
+
+* {
+	padding: 0;
+	margin: 0;
+	font-size: calc(2rem / 3);
+	box-sizing: border-box;
+}

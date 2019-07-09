@@ -1,0 +1,14 @@
+@import '../utilities.scss';
+
+.navbar {
+	height: 2rem;
+	background: linear-gradient(90deg, #624991, #5294a1);
+	display: flex;
+	align-items: center;
+	padding-left: 2rem;
+
+	&__logo {
+		width: auto;
+		height: 2rem;
+	}
+}

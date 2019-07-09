@@ -29,10 +29,35 @@ module.exports = plugins_path => ({
 					},
 				},
 			},
+			{
+				test: /\.s?css$/,
+				use: [r('style-loader'), r('css-loader'), r('sass-loader')],
+			},
+			{
+				test: /\.svg$/,
+				use: [
+					{
+						loader: r('babel-loader'),
+						options: {
+							presets: [
+								r('@babel/preset-env'),
+								r('@babel/preset-react'),
+							],
+							plugins: [r('@babel/plugin-transform-react-jsx')],
+						},
+					},
+					{
+						loader: r('react-svg-loader'),
+						options: {
+							jsx: true,
+						},
+					},
+				],
+			},
 		],
 	},
 	resolve: {
-		extensions: ['.js', '.jsx'],
+		extensions: ['.js', '.jsx', '.scss', '.svg'],
 	},
 	mode: 'development',
 });
