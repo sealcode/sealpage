@@ -1,0 +1,101 @@
+@import '../utilities.scss';
+
+.sidebar {
+	height: calc(100vh - 2rem);
+	display: flex;
+	flex-flow: column;
+	text-transform: capitalize;
+	background: #fff;
+	transition: 0.3s;
+
+	&--show {
+		width: auto;
+		padding: 1rem 1.3rem;
+	}
+
+	&--hide {
+		width: 0;
+		padding: 0.5rem;
+		overflow-y: hidden;
+		opacity: 0;
+	}
+
+	& > * {
+		transition: opacity 0.3s;
+	}
+
+	&__wrapper {
+		display: flex;
+	}
+
+	&__title,
+	&__subtitle {
+		font-size: px-to-rem(24);
+		text-transform: none;
+	}
+	&__subtitle {
+		font-weight: 400;
+	}
+	a {
+		text-decoration: none;
+		color: #000;
+	}
+	&__main-menu {
+		font-size: px-to-rem(16);
+		list-style: none;
+		transition: 0.3s;
+		&--primary {
+			flex-grow: 1;
+			margin-top: px-to-rem(24);
+		}
+		&--secondary {
+			padding: 1rem 0;
+			text-transform: lowercase;
+			font-size: px-to-rem(12);
+		}
+	}
+	&__menu-item {
+		.active {
+			font-weight: 600;
+		}
+		margin-top: px-to-rem(16);
+		&--secondary > a {
+			color: #666;
+		}
+	}
+	&__separator {
+		background-color: #ddd;
+		width: px-to-rem(1);
+		margin: px-to-rem(24) 0;
+		position: relative;
+		display: block;
+	}
+	&__arrow {
+		position: absolute;
+		height: 100%;
+		width: px-to-rem(35);
+		left: px-to-rem(-40);
+		background: none;
+		border: none;
+		cursor: pointer;
+		font-size: 25px;
+		color: #999;
+		font-weight: 400;
+		outline: none;
+
+		&::-moz-focus-inner {
+			border: 0;
+		}
+
+		&--hide {
+			left: px-to-rem(-30);
+		}
+	}
+}
+
+@media (max-height: 525px) {
+	.sidebar--show {
+		padding: 1rem 2rem 0 1.3rem;
+		overflow-y: auto;
+	}
+}

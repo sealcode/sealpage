@@ -1,12 +1,22 @@
 @import './navbar/navbar';
+@import './sidebar/sidebar';
+@import './webfonts.scss';
 
 html {
 	font-size: 1.5em;
+	font-family: 'IBM Plex Sans';
 }
 
 * {
 	padding: 0;
 	margin: 0;
-	font-size: calc(2rem / 3);
 	box-sizing: border-box;
+}
+
+li {
+	list-style: none;
+}
+
+.app-sealpage {
+	display: flex;
 }

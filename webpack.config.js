@@ -54,6 +54,18 @@ module.exports = ec_path => ({
 					},
 				],
 			},
+			{
+				test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
+				use: [
+					{
+						loader: r('file-loader'),
+						options: {
+							name: '[name].[ext]',
+							outputPath: 'fonts/',
+						},
+					},
+				],
+			},
 		],
 	},
 	resolve: {

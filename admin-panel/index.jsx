@@ -1,11 +1,12 @@
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as HashRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter as HashRouter, Link, Route } from 'react-router-dom';
+import Collections from './collections/collections';
 
-import Collections from './collections/collections.jsx';
 import useCollections from './collections/use-collections.js';
 import Navbar from './navbar/navbar';
+import Sidebar from './sidebar/sidebar';
 
 import './styles.scss';
 
@@ -50,10 +51,8 @@ function AppRouter() {
 		<ErrorBoundary>
 			<HashRouter basename="/#">
 				<Navbar />
-				<div>
-					<Link to="/">
-						<h1>Sealpage</h1>
-					</Link>
+				<div className="app-sealpage">
+					<Sidebar />
 					<nav>
 						<ul>
 							{collections.map(collection => (
@@ -69,14 +68,7 @@ function AppRouter() {
 						<Link to={'/body-page-editor'}>BodyPageEditor</Link>
 					</nav>
 
-					<hr />
-					<Route
-						path="/"
-						exact
-						component={() => <h2>Admin panel</h2>}
-					/>
 					<Route path="/collections" component={Collections} />
-
 					{/* it's only for mockup testing  */}
 					{/* <Route path="/body-page-editor" component={BodyPageEditor} /> */}
 				</div>

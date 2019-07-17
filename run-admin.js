@@ -2,7 +2,7 @@ const locreq = require('locreq')(__dirname);
 const webpack = require('webpack');
 const config = require('./webpack.config');
 const path = require('path');
-const fs = require('fs');
+const fonts_require = require('./utils/fonts-require');
 require('colors');
 
 module.exports = async function(sitemap_path, debug_opt) {
@@ -14,6 +14,9 @@ module.exports = async function(sitemap_path, debug_opt) {
 	);
 
 	let expanded_ec_path = path.relative(ec_path || '.', '/') + ec_path;
+
+	//Require necessary fonts
+	await fonts_require();
 
 	app.WwwServer.static_route(outDir, '');
 	const compiler = webpack(config(ec_available ? [expanded_ec_path] : []));
