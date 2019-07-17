@@ -7,19 +7,16 @@ require('colors');
 
 module.exports = async function(sitemap_path, debug_opt) {
 	const outDir = locreq.resolve('./public-admin');
-	const { app, plugins_path } = await require(sitemap_path)();
+	const { app, ec_path } = await require(sitemap_path)();
 
-	let plugins_available = require('./utils/are-plugins-avaliable')(
-		plugins_path
+	let ec_available = require('./utils/are-external-components-avaliable')(
+		ec_path
 	);
 
-	let expanded_plugins_path =
-		path.relative(plugins_path || '.', '/') + plugins_path;
+	let expanded_ec_path = path.relative(ec_path || '.', '/') + ec_path;
 
 	app.WwwServer.static_route(outDir, '');
-	const compiler = webpack(
-		config(plugins_available ? [expanded_plugins_path] : [])
-	);
+	const compiler = webpack(config(ec_available ? [expanded_ec_path] : []));
 
 	compiler.watch(
 		{

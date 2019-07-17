@@ -1,12 +1,12 @@
 const path = require('path');
 const r = require.resolve;
 
-module.exports = plugins_path => ({
+module.exports = ec_path => ({
 	devtool: 'eval-source-maps',
 	entry: {
 		'bundle.js': [
 			path.resolve(__dirname, './admin-panel/index.jsx'),
-			...plugins_path,
+			...ec_path,
 		],
 	},
 	output: {

@@ -1,7 +1,7 @@
 const Markdown = require('./markdown/markdown.html');
 const Navbar = require('./navbar/navbar.html');
 const DownloadFileButton = require('./download-file-button/download-file-button');
-const ResponsiveImage = require('./responsive-image/responsive-image');
+const ResponsiveImage = require('./responsive-image/responsive-image.html.js');
 
 const components = {
 	Markdown,
@@ -10,14 +10,20 @@ const components = {
 	ResponsiveImage,
 };
 
-function register(pluginComponents) {
-	for (let i = 0; i < pluginComponents.length; i++) {
-		const name = pluginComponents[i].name;
+function register(externalComponents) {
+	for (let i = 0; i < externalComponents.length; i++) {
+		const name = externalComponents[i].name;
+
+		if (!name)
+			throw new Error(
+				'Name must be provided for the user defined External Component'
+			);
+
 		if (components[name])
 			throw new Error(
-				`Plugins registration process failed. There have been naming conflicts that have to be resolved first: ${name}`
+				`External Components registration process failed. There have been naming conflicts that have to be resolved first: ${name}`
 			);
-		components[name] = pluginComponents[i];
+		components[name] = externalComponents[i].component;
 	}
 }
 

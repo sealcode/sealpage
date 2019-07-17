@@ -9,7 +9,6 @@ module.exports = function ElementEditor({
 }) {
 	function createControls() {
 		let controls = [];
-
 		let propsControls = components[componentName].propsControls();
 
 		for (const prop in propsControls) {

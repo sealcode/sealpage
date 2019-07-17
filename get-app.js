@@ -45,7 +45,7 @@ async function renderPreview(uuid, elements) {
 	const path_prefix = `/previews/${uuid}`;
 	const s = new S({ output_dir, path_prefix });
 
-	// creating componentsinstances
+	// creating components instances
 	for (const component_name in components) {
 		component_instances[component_name] = new components[component_name](s);
 	}

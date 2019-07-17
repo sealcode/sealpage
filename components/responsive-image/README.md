@@ -12,6 +12,8 @@ responsive_image({ image_path, resolutions, quality, sizes_attr, alt });
 
 -   **image_path:** string, ścieżka do obrazu, dla którego chcemy wygenerować znacznik,
 
+-   **out_path** string, miejsce w którym mają zostać zapisane wyrenderowane pliki,
+
 -   **resolutions:** tablica np. [200, 300] - rozmiary dla których obraz ma być pocięty,
 
 -   **quality:** number, jakość obrazu w przedziale od 0 - 100,
