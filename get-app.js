@@ -8,6 +8,7 @@ const writeFile = util.promisify(fs.writeFile);
 const exists = util.promisify(fs.access);
 const mkdir = util.promisify(fs.mkdir);
 const components = require('./components/index').components;
+const html = require('./components/html.html');
 
 const fieldTypes = {
 	slug: require('./field-types/slug'),
@@ -24,7 +25,7 @@ const manifest = {
 };
 
 async function renderPreview(uuid, elements) {
-	let html = '';
+	let body = '';
 	let temporary_path = `/tmp/sealpage_bundle/${uuid}`;
 
 	try {
@@ -52,10 +53,11 @@ async function renderPreview(uuid, elements) {
 
 	// render preview using component instances
 	for (const [componentName, componentProps] of elements) {
-		html += await component_instances[componentName].render(componentProps);
+		body += await component_instances[componentName].render(componentProps);
 	}
 
-	await writeFile(`${output_dir}/index.html`, html);
+	await writeFile(`${output_dir}/index.html`, await html({}, body));
+	await s.renderStyles();
 
 	return `${path_prefix}/index.html?${uuidv4()}`;
 }

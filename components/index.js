@@ -2,12 +2,14 @@ const Markdown = require('./markdown/markdown.html');
 const Navbar = require('./navbar/navbar.html');
 const DownloadFileButton = require('./download-file-button/download-file-button');
 const ResponsiveImage = require('./responsive-image/responsive-image.html.js');
+const RedText = require('./red-text/red-text.html');
 
 const components = {
 	Markdown,
 	Navbar,
 	DownloadFileButton,
 	ResponsiveImage,
+	RedText,
 };
 
 function register(externalComponents) {
