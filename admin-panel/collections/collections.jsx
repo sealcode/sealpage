@@ -3,20 +3,28 @@ const { useEffect, useState } = React;
 import { BrowserRouter as HashRouter, Route, Link } from 'react-router-dom';
 import useCollections from './use-collections.js';
 import CreateCollectionItem from './create-collection-item.js';
+import Loading from '../loading/loading';
 
 function CollectionList({ match }) {
 	const collection_name = match.params.collection;
 	const collection = useCollections(collection_name);
 
 	const [items, setItems] = useState([]);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
+		setLoading(true);
 		fetch(`/api/v1/collections/${collection_name}`)
 			.then(response => response.json())
-			.then(response => setItems(response.items));
+			.then(response => {
+				setLoading(false);
+				setItems(response.items);
+			});
 	}, []);
 
-	return (
+	return loading ? (
+		<Loading />
+	) : (
 		<div>
 			<Link to={`/collections/${collection_name}/create`}>+create</Link>
 			{items.map((item, index) => (

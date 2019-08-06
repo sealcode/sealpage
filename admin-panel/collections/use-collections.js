@@ -8,6 +8,7 @@ const url = '/api/v1/specifications';
 
 export default function useCollections(collection_name) {
 	const [collections, setCollections] = useState(collections_cache);
+
 	if (promise) {
 		promise.then(setCollections);
 	} else {
@@ -37,7 +38,7 @@ export default function useCollections(collection_name) {
 	}
 	return collection_name
 		? collections.filter(
-			collection => collection.name == collection_name
+				collection => collection.name == collection_name
 		  )[0]
 		: collections;
 }

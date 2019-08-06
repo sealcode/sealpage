@@ -2,19 +2,23 @@ import React, { useState, useEffect } from 'react';
 
 import useCollections from './use-collections.js';
 import FormControls from '../form-controls/form-controls.jsx';
+import Loading from '../loading/loading';
 
 export default function({ match }) {
 	const { id, collection, mode } = match.params;
 	const _collection = useCollections(collection);
 	const [values, setValues] = useState({});
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		async function fetchData() {
+			setLoading(true);
 			const query = await fetch(
 				`/api/v1/collections/${collection}/${id}`
 			);
 			const data = await query.json();
 			setValues({ ...data });
+			setLoading(false);
 		}
 		if (mode === 'edit') {
 			fetchData();
@@ -43,7 +47,7 @@ export default function({ match }) {
 				body[key] = values[key];
 			}
 		});
-
+		setLoading(true);
 		const query = await fetch(api_endpoint, {
 			method: mode === 'edit' ? 'PUT' : 'POST',
 			headers: {
@@ -62,11 +66,14 @@ export default function({ match }) {
 					values.title
 				}`
 			);
+			setLoading(false);
 			document.location.hash = `/collections/${collection}`;
 		}
 	}
 
-	return (
+	return loading ? (
+		<Loading />
+	) : (
 		<div>
 			<h2>Metadata Editor</h2>
 			<form onSubmit={save}>
