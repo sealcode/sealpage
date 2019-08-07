@@ -7,7 +7,7 @@
 		"sealpage": "./cli.js"
 	},
 	"scripts": {
-		"test": "mocha ./components/**/*.test.js"
+		"test": "mocha ./components/**/*.test.js ./test/*.js"
 	},
 	"repository": {
 		"type": "git",
