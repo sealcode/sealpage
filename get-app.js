@@ -7,7 +7,6 @@ const util = require('util');
 const writeFile = util.promisify(fs.writeFile);
 const exists = util.promisify(fs.access);
 const mkdir = util.promisify(fs.mkdir);
-const components = require('./components/index').components;
 
 const fieldTypes = {
 	slug: require('./field-types/slug'),
@@ -41,18 +40,12 @@ async function renderPreview(uuid, elements) {
 
 	let output_dir = path.resolve(temporary_path);
 
-	const component_instances = {};
 	const path_prefix = `/previews/${uuid}`;
 	const s = new S({ output_dir, path_prefix });
 
-	// creating components instances
-	for (const component_name in components) {
-		component_instances[component_name] = new components[component_name](s);
-	}
-
-	// render preview using component instances
+	// render preview using component instances initialized by s object
 	for (const [componentName, componentProps] of elements) {
-		html += await component_instances[componentName].render(componentProps);
+		html += await s.components[componentName].render(componentProps);
 	}
 
 	await writeFile(`${output_dir}/index.html`, html);
