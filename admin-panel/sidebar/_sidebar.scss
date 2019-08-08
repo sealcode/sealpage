@@ -6,7 +6,7 @@
 	flex-flow: column;
 	text-transform: capitalize;
 	background: #fff;
-	transition: 0.3s, height 0;
+	transition: all 0.3s, height 0s;
 
 	&--show {
 		width: auto;

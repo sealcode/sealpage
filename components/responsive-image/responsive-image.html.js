@@ -20,7 +20,7 @@ class ResponsiveImage extends Component {
 		s,
 		{
 			image_path,
-			resolutions = [100, 400, 900, 1000, 1300],
+			resolutions = [],
 			quality = 80,
 			sizes_attr,
 			alt = '',
@@ -35,9 +35,19 @@ class ResponsiveImage extends Component {
 		const hashFile = s.node_require(
 			path.resolve(__dirname, '../../lib/hash-file.js')
 		);
+		const imgSize = s.node_require('image-size');
 
 		if (!image_path) {
 			image_path = locreq.resolve('assets/sealpage-logo.png');
+		}
+
+		//If resolutions array is not specified, fill it with values: 100, 200, ..., <img_width>
+		if (resolutions.length === 0) {
+			const { width } = imgSize(image_path);
+			for (let size = 100; size < Math.min(4096, width); size += 100) {
+				resolutions.push(size);
+			}
+			resolutions.push(width);
 		}
 
 		const readFile = promisify(fs.readFile);

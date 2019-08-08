@@ -108,6 +108,24 @@ describe('responsive-image-creator', function() {
 		assert.notEqual(first_hash, third_hash);
 		assert.notEqual(second_hash, third_hash);
 	});
+
+	it('Should create a resolution array with specified values if not provided', async function() {
+		const changed_resolutions_data = {
+			...resize_data,
+			resolutions: [],
+		};
+
+		await new ResponsiveImage(s).render(changed_resolutions_data);
+
+		const files = await readdir(
+			path.resolve(__dirname, './images'),
+			'utf-8'
+		).catch(err => {
+			throw new Error(err);
+		});
+
+		assert(files.length !== 0);
+	});
 });
 
 //After test delete the test files
