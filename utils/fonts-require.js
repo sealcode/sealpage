@@ -3,7 +3,7 @@
 const fs = require('fs');
 const cp = require('child_process');
 const { promisify } = require('util');
-const exec = promisify(cp.execFile);
+const exec = promisify(cp.exec);
 const access = promisify(fs.access);
 const { resolve } = require('path');
 require('colors');
@@ -31,17 +31,13 @@ async function fonts_require() {
 		console.log('Fonts not present, downloading necessary fonts...'.yellow);
 		for (let font of font_names) {
 			const dest = `${root_path}/assets/fonts/${font}`;
-			cp.exec(
-				`echo $font &&
-				mkdir -p ${dest}
+			const { stdout } = await exec(
+				`mkdir -p ${dest} &&
 	        wget -O ${font}.zip "https://google-webfonts-helper.herokuapp.com/api/fonts/${font}?download=zip&subsets=latin-ext&variants=${necessary_fonts[font]}" &&
 	        unzip -j ${font}.zip -d ${dest} &&
-	        rm ./${font}.zip;`,
-				function(error, stdout, stderr) {
-					if (error) throw new Error(error);
-					console.log(stdout);
-				}
-			);
+	        rm ./${font}.zip;`
+			).catch(err => console.error(err));
+			console.log(stdout);
 		}
 	} else {
 		console.log('All fonts are available, proceeding...'.green);

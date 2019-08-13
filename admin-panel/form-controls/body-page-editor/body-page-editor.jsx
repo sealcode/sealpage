@@ -1,10 +1,10 @@
 const React = require('react');
-const useState = React.useState;
 const ElementEditor = require('./element-editor');
 const Preview = require('./preview');
 const SelectComponent = require('./select-component');
 const ElementButtons = require('./element-buttons');
 const FloatingLabel = require('../../floating-label/floating-label');
+const Button = require('../../button/button').default;
 
 function addElement(elements, componentToCreate) {
 	return elements.concat([[componentToCreate, {}]]);
@@ -35,8 +35,6 @@ function minmax(min, max, value) {
 }
 
 module.exports = function bodyPageEditor({ value: elements, onChange }) {
-	const [componentToCreate, setComponentToCreate] = useState(null);
-
 	if (elements === '') elements = [];
 
 	return (
@@ -81,22 +79,32 @@ module.exports = function bodyPageEditor({ value: elements, onChange }) {
 				</div>
 				<Preview elements={elements} />
 			</div>
-
 			<div>{JSON.stringify(elements)}</div>
-
-			<SelectComponent
-				value={componentToCreate || ''}
-				onChange={setComponentToCreate}
-			/>
-			<button
-				disabled={!componentToCreate}
-				onClick={e => {
-					e.preventDefault();
-					onChange(addElement(elements, componentToCreate));
-				}}
-			>
-				Add element
-			</button>
+			<div className="body-page-editor__control-group">
+				<div className="body-page-editor__control-section">
+					<SelectComponent
+						value=""
+						onChange={e => {
+							onChange(addElement(elements, e));
+						}}
+					/>
+					<Button
+						onClick={e => e.preventDefault()}
+						icon="&#xe03f;"
+						modifier="secondary"
+					>
+						zen mode
+					</Button>
+				</div>
+				<div className="body-page-editor__control-section">
+					<Button onClick={e => e.preventDefault()} icon="(">
+						editor
+					</Button>
+					<Button onClick={e => e.preventDefault()} icon="&#xe037;">
+						preview
+					</Button>
+				</div>
+			</div>
 		</FloatingLabel>
 	);
 };

@@ -9,6 +9,7 @@
 	textarea {
 		transition: 0.3s border ease-in-out;
 	}
+	display: inline-block;
 
 	&--input {
 		& > input,

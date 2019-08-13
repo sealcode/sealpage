@@ -2,6 +2,7 @@
 
 .create-form {
 	padding: 0 1rem;
+	margin-bottom: 0.5rem;
 	&__group {
 		display: flex;
 		justify-content: space-between;
@@ -10,6 +11,7 @@
 	&__header {
 		font-size: px-to-rem(20);
 		font-weight: 600;
+		display: inline-block;
 	}
 
 	&__title {
@@ -25,6 +27,40 @@
 	}
 	.body-page-editor {
 		display: flex;
+		@media (max-width: 768px) {
+			max-width: 80vw;
+		}
+
+		@media (max-width: 550px) {
+			max-width: 70vw;
+		}
+
+		&__control-group {
+			max-width: 100%;
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		&__control-section {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+			@media (max-width: 470px) {
+				margin: 0.5rem auto;
+			}
+
+			.button:nth-child(2) {
+				margin-left: 0.5rem;
+			}
+		}
+	}
+
+	&__btn-group {
+		display: flex;
+		justify-content: flex-end;
 	}
 }
 

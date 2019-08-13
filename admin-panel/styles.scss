@@ -3,8 +3,10 @@
 @import './collections/create-form';
 @import './form-controls/body-page-editor/preview';
 @import './sidebar/sidebar';
+@import './button/button';
 @import './loading/loading';
 @import './webfonts.scss';
+@import './webicons.scss';
 
 html {
 	font-size: 1.5em;

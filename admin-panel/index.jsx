@@ -67,6 +67,13 @@ function AppRouter() {
 
 					{/* it's only for mockup testing  */}
 					{/* <Route path="/body-page-editor" component={BodyPageEditor} /> */}
+					<div
+						style={{
+							display: 'flex',
+							justifyContent: 'space-between',
+							flexWrap: 'wrap',
+						}}
+					/>
 				</div>
 			</HashRouter>
 		</ErrorBoundary>

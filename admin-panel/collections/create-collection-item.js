@@ -4,6 +4,7 @@ import capitalize from '../../utils/capitalize';
 import useCollections from './use-collections.js';
 import FormControls from '../form-controls/form-controls.jsx';
 import Loading from '../loading/loading';
+import Button from '../button/button';
 
 function renderFieldGroup(fields, values, setValue) {
 	return fields.map(([field_name, field]) =>
@@ -115,6 +116,14 @@ function CreateCollectionItem({ match }) {
 						<h2 className="create-form__header">
 							{capitalize(group)}
 						</h2>
+						<Button
+							onClick={e => e.preventDefault()}
+							icon="W"
+							modifier="secondary"
+							style={{ float: 'right' }}
+						>
+							Collapse
+						</Button>
 						<ul
 							className={`create-form__group create-form__group--${group}`}
 						>
@@ -126,7 +135,22 @@ function CreateCollectionItem({ match }) {
 						</ul>
 					</React.Fragment>
 				))}
-				<button type="submit">Save</button>
+				<div className="create-form__btn-group">
+					<Button
+						onClick={e => e.preventDefault()}
+						modifier="secondary"
+						icon="K"
+					>
+						Full preview
+					</Button>
+					<Button
+						style={{ marginLeft: '0.5rem' }}
+						icon="S"
+						type="submit"
+					>
+						Save
+					</Button>
+				</div>
 			</form>
 		</div>
 	);

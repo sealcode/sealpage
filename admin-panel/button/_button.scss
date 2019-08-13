@@ -1,0 +1,57 @@
+.button {
+	display: inline-flex;
+	min-width: px-to-rem(83);
+	height: px-to-rem(32);
+	font-weight: 600;
+	background: #fff;
+	cursor: pointer;
+	padding: px-to-rem(8);
+	transition: all 0.2s ease, outline 0s;
+	align-items: center;
+	text-transform: lowercase;
+
+	&:active {
+		background: #000;
+		color: #fff;
+	}
+
+	&:focus {
+		outline: 2px dashed #624991;
+	}
+
+	&:disabled,
+	&:disabled:hover {
+		background: #e1e1e1;
+		color: #000;
+		border: 1px solid #000;
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	&__icon {
+		vertical-align: middle;
+		display: inline-block;
+		margin-right: px-to-rem(8);
+	}
+
+	&--primary {
+		color: #000;
+		border: 1px solid #000;
+
+		&:hover {
+			color: #fff;
+			background: #5294a1;
+			border: 1px solid #999;
+		}
+	}
+
+	&--secondary {
+		color: #999;
+		border: 1px solid #999;
+		&:hover {
+			background: #624991;
+			color: #fff;
+			border: 1px solid #999;
+		}
+	}
+}
