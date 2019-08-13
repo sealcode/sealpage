@@ -1,10 +1,27 @@
 import React, { useState, useEffect } from 'react';
+import capitalize from '../../utils/capitalize';
 
 import useCollections from './use-collections.js';
 import FormControls from '../form-controls/form-controls.jsx';
 import Loading from '../loading/loading';
 
-export default function({ match }) {
+function renderFieldGroup(fields, values, setValue) {
+	return fields.map(([field_name, field]) =>
+		FormControls[field.type.name]
+			? /* eslint-disable indent */
+			  React.createElement(FormControls[field.type.name], {
+					key: field_name,
+					...field,
+					onChange: value => setValue(field_name, value),
+					value: values[field_name] || '',
+					label: field_name,
+			  })
+			: /* eslint-enable indent */
+			  `: ${field.type.name}`
+	);
+}
+
+function CreateCollectionItem({ match }) {
 	const { id, collection, mode } = match.params;
 	const _collection = useCollections(collection);
 	const [values, setValues] = useState({});
@@ -71,41 +88,48 @@ export default function({ match }) {
 		}
 	}
 
+	const fields_by_group = {};
+	const collection_fields = Object.entries(_collection.fields);
+
+	for (const [field_name, field] of collection_fields) {
+		const group = field.display_hints.group;
+		const element = [field_name, field];
+
+		fields_by_group[group] = [element, ...(fields_by_group[group] || [])];
+	}
+
 	return loading ? (
 		<Loading />
 	) : (
-		<div>
-			<h2>Metadata Editor</h2>
-			<form onSubmit={save}>
-				{JSON.stringify(values)}
-				<ul>
-					{Object.entries(_collection.fields).map(
-						([field_name, field]) => (
-							<label
-								htmlFor={field_name}
-								style={{ display: 'block' }}
-								key={field_name}
-							>
-								{field_name}
-								{FormControls[field.type.name]
-									? /* eslint-disable indent */
-									  React.createElement(
-											FormControls[field.type.name],
-											{
-												...field,
-												onChange: value =>
-													setValue(field_name, value),
-												value: values[field_name] || '',
-											}
-									  )
-									: /* eslint-enable indent */
-									  `: ${field.type.name}`}
-							</label>
-						)
-					)}
-				</ul>
-				<input type="submit" />
+		<div style={{ width: '100%' }}>
+			<h1 className="create-form__title">
+				{capitalize(mode)} an item for the{' '}
+				<span className="create-form__collection-name">
+					{capitalize(collection)}
+				</span>{' '}
+				collection
+			</h1>
+			<form className="create-form" onSubmit={save}>
+				{Object.keys(fields_by_group).map((group, index) => (
+					<React.Fragment key={`group#${index}`}>
+						<h2 className="create-form__header">
+							{capitalize(group)}
+						</h2>
+						<ul
+							className={`create-form__group create-form__group--${group}`}
+						>
+							{renderFieldGroup(
+								fields_by_group[group],
+								values,
+								setValue
+							)}
+						</ul>
+					</React.Fragment>
+				))}
+				<button type="submit">Save</button>
 			</form>
 		</div>
 	);
 }
+
+export default CreateCollectionItem;

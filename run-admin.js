@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const config = require('./webpack.config');
 const path = require('path');
 const fonts_require = require('./utils/fonts-require');
+const icons_require = require('./utils/icons-require');
 require('colors');
 
 module.exports = async function(sitemap_path, debug_opt) {
@@ -17,6 +18,7 @@ module.exports = async function(sitemap_path, debug_opt) {
 
 	//Require necessary fonts
 	await fonts_require();
+	await icons_require();
 
 	app.WwwServer.static_route(outDir, '');
 	const compiler = webpack(config(ec_available ? [expanded_ec_path] : []));

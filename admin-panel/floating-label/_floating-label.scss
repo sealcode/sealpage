@@ -1,0 +1,98 @@
+@import '../utilities.scss';
+
+.floating-label {
+	position: relative;
+	margin: 0.5rem 0;
+	font-size: px-to-rem(14);
+	input,
+	select,
+	textarea {
+		transition: 0.3s border ease-in-out;
+	}
+
+	&--input {
+		& > input,
+		& > select {
+			width: 9rem;
+			height: px-to-rem(32);
+			border: 2px solid #999;
+			padding: 0.5rem;
+			color: #999;
+			&:focus {
+				border: 2px solid #333;
+				color: #333;
+			}
+		}
+		& > input[type='date'] {
+			padding: 0 0.5rem;
+		}
+		& > select {
+			padding: 0;
+			font-weight: 500;
+			background: #fff;
+			display: inline-block;
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
+			cursor: pointer;
+			padding-left: 1px;
+			text-align: center;
+		}
+	}
+
+	&__label {
+		text-transform: capitalize;
+		position: absolute;
+		background: #fff;
+		font-size: px-to-rem(12);
+		font-weight: 500;
+		top: -26%;
+		left: px-to-rem(8);
+
+		&--textarea {
+			top: px-to-rem(-8);
+		}
+		&--file,
+		&--div {
+			top: px-to-rem(-9);
+		}
+	}
+	&--textarea {
+		@media (max-width: $desktop-breakpoint) {
+			max-width: 80%;
+		}
+
+		& > textarea {
+			width: px-to-rem(592);
+			min-height: px-to-rem(256);
+			resize: vertical;
+			border: 2px solid #999;
+			padding: 0.5rem;
+			color: #999;
+
+			&:focus {
+				border: 2px solid #333;
+				color: #333;
+			}
+		}
+	}
+
+	&--file {
+		border: 2px solid #999;
+		padding: 1rem;
+		@media (max-width: $desktop-breakpoint) {
+			max-width: 80%;
+		}
+	}
+	&--div {
+		border: 2px solid #333;
+		padding: px-to-rem(17);
+		flex: 1;
+	}
+}
+
+@media (max-width: 436px) {
+	.create-form__group--metadata .floating-label {
+		margin: 0.5rem auto;
+	}
+}

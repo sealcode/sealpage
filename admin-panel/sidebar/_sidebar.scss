@@ -9,8 +9,10 @@
 	transition: all 0.3s, height 0s;
 
 	&--show {
-		width: auto;
+		width: 10rem;
 		padding: 1rem 1.3rem;
+		position: sticky;
+		top: 0;
 	}
 
 	&--hide {
@@ -71,8 +73,10 @@
 		display: block;
 	}
 	&__arrow {
-		position: absolute;
-		height: 100%;
+		position: sticky;
+		top: 50%;
+		margin-left: -2rem;
+
 		width: px-to-rem(35);
 		left: px-to-rem(-40);
 		background: none;
@@ -88,7 +92,8 @@
 		}
 
 		&--hide {
-			left: px-to-rem(-30);
+			margin-left: -1.2rem;
+			left: px-to-rem(-12);
 		}
 	}
 }

@@ -1,0 +1,40 @@
+@import '../utilities.scss';
+
+.create-form {
+	padding: 0 1rem;
+	&__group {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+	}
+	&__header {
+		font-size: px-to-rem(20);
+		font-weight: 600;
+	}
+
+	&__title {
+		font-size: 1rem;
+		padding: 1rem;
+		color: #624991;
+	}
+
+	&__collection-name {
+		font-size: 1rem;
+		font-style: italic;
+		color: #5294a1;
+	}
+	.body-page-editor {
+		display: flex;
+	}
+}
+
+@media (max-width: $desktop-breakpoint) {
+	.create-form {
+		.body-page-editor {
+			flex-flow: column;
+		}
+		textarea {
+			max-width: 100%;
+		}
+	}
+}

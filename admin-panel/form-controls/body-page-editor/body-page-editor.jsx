@@ -1,8 +1,10 @@
 const React = require('react');
 const useState = React.useState;
-const ElementEditor = require('./element-editor.jsx');
-const Preview = require('./preview.jsx');
-const SelectComponent = require('./select-component.jsx');
+const ElementEditor = require('./element-editor');
+const Preview = require('./preview');
+const SelectComponent = require('./select-component');
+const ElementButtons = require('./element-buttons');
+const FloatingLabel = require('../../floating-label/floating-label');
 
 function addElement(elements, componentToCreate) {
 	return elements.concat([[componentToCreate, {}]]);
@@ -38,53 +40,45 @@ module.exports = function bodyPageEditor({ value: elements, onChange }) {
 	if (elements === '') elements = [];
 
 	return (
-		<React.Fragment>
-			<div style={{ display: 'flex', flexFlow: 'column' }}>
-				{elements.map(([componentName, componentProps], index) => (
-					<div
-						key={index}
-						style={{ display: 'flex', flexFlow: 'row' }}
-					>
-						<ElementEditor
-							componentName={componentName}
-							componentProps={componentProps}
-							onChange={newProps =>
-								onChange(
-									setElementProps(elements, index, newProps)
-								)
-							}
-						/>
-						<button
-							onClick={e => {
-								e.preventDefault();
-								onChange(removeElement(elements, index));
-							}}
+		<FloatingLabel type="div" label="Body">
+			<div className="body-page-editor">
+				<div
+					style={{
+						minWidth: '50%',
+						height: '23rem',
+						overflowY: 'auto',
+					}}
+				>
+					{elements.map(([componentName, componentProps], index) => (
+						<div
+							key={index}
+							style={{ display: 'flex', flexFlow: 'row wrap' }}
 						>
-							Remove element
-						</button>
-						<button
-							onClick={e => {
-								e.preventDefault();
-								onChange(
-									changeElementPosition(elements, index, -1)
-								);
-							}}
-						>
-							Move up ↑
-						</button>
-						<button
-							onClick={e => {
-								e.preventDefault();
-								onChange(
-									changeElementPosition(elements, index, 1)
-								);
-							}}
-						>
-							Move down ↓
-						</button>
-					</div>
-				))}
-
+							<ElementEditor
+								componentName={componentName}
+								componentProps={componentProps}
+								onChange={newProps =>
+									onChange(
+										setElementProps(
+											elements,
+											index,
+											newProps
+										)
+									)
+								}
+							/>
+							<ElementButtons
+								elements={elements}
+								index={index}
+								handlers={[
+									changeElementPosition,
+									removeElement,
+									onChange,
+								]}
+							/>
+						</div>
+					))}
+				</div>
 				<Preview elements={elements} />
 			</div>
 
@@ -103,6 +97,6 @@ module.exports = function bodyPageEditor({ value: elements, onChange }) {
 			>
 				Add element
 			</button>
-		</React.Fragment>
+		</FloatingLabel>
 	);
 };

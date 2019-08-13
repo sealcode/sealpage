@@ -1,0 +1,16 @@
+.preview {
+	background-color: #f1f1f1;
+	display: flex;
+	flex-flow: column;
+	height: auto;
+	margin-left: 1rem;
+	padding: 1rem;
+	width: 100%;
+}
+
+@media (max-width: $desktop-breakpoint) {
+	.preview {
+		max-width: 100%;
+		margin: 1rem 0;
+	}
+}

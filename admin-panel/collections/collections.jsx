@@ -1,13 +1,12 @@
 const React = require('react');
 const { useEffect, useState } = React;
-import { BrowserRouter as HashRouter, Route, Link } from 'react-router-dom';
-import useCollections from './use-collections.js';
+import { Route, Link } from 'react-router-dom';
 import CreateCollectionItem from './create-collection-item.js';
 import Loading from '../loading/loading';
+import useCollections from './use-collections';
 
 function CollectionList({ match }) {
 	const collection_name = match.params.collection;
-	const collection = useCollections(collection_name);
 
 	const [items, setItems] = useState([]);
 	const [loading, setLoading] = useState(false);
@@ -42,36 +41,30 @@ function CollectionList({ match }) {
 }
 
 function Collection({ match }) {
-	const collection_name = match.params.collection;
-
 	return (
 		<div>
-			<h2>{collection_name}</h2>
-			<Route exact path={match.path} component={CollectionList} />
+			<Route path={match.path} component={CollectionList} />
 		</div>
 	);
 }
 
-function Collections({ match }) {
+function Collections() {
+	const collections = useCollections();
 	return (
 		<div>
-			Collections
-			<Route path={`${match.path}/:collection`} component={Collection} />
-			<Route
-				exact
-				path={`${match.path}/:collection/:mode`}
-				component={CreateCollectionItem}
-			/>
-			<Route
-				exact
-				path={`${match.path}/:collection/:mode/:id`}
-				component={CreateCollectionItem}
-			/>
-			<Route
-				exact
-				path={match.path}
-				component={() => <div>Pick a collection</div>}
-			/>
+			<nav>
+				<ul>
+					{collections.map(collection => (
+						<li key={collection.name}>
+							<Link to={`/collections/${collection.name}`}>
+								{collection.name}
+							</Link>
+						</li>
+					))}
+				</ul>
+
+				<Route path="/collections/:collection" component={Collection} />
+			</nav>
 		</div>
 	);
 }

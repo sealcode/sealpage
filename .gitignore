@@ -5,3 +5,5 @@ public-admin/*
 !public-admin/index.html
 .idea
 assets/fonts
+assets/icons
+admin-panel/webicons.scss

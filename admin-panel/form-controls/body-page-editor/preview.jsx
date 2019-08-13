@@ -20,18 +20,5 @@ module.exports = function Preview({ elements }) {
 		generateRenderedHTML(uuid, elements).then(url => setPreviewUrl(url));
 	}, [JSON.stringify(elements)]);
 
-	return (
-		<iframe
-			src={previewUrl}
-			style={{
-				backgroundColor: '#f1f1f1',
-				display: 'flex',
-				flexFlow: 'column',
-				height: 'auto',
-				margin: '1rem',
-				padding: '1rem',
-				width: '30rem',
-			}}
-		/>
-	);
+	return <iframe className="preview" src={previewUrl} />;
 };

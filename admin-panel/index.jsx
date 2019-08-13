@@ -3,8 +3,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as HashRouter, Link, Route } from 'react-router-dom';
 import Collections from './collections/collections';
+import CreateCollectionItem from './collections/create-collection-item';
 
-import useCollections from './collections/use-collections.js';
 import Navbar from './navbar/navbar';
 import Sidebar from './sidebar/sidebar';
 
@@ -46,29 +46,25 @@ class ErrorBoundary extends React.Component {
 }
 
 function AppRouter() {
-	const collections = useCollections();
 	return (
 		<ErrorBoundary>
 			<HashRouter basename="/#">
 				<Navbar />
 				<div className="app-sealpage">
 					<Sidebar />
-					<nav>
-						<ul>
-							{collections.map(collection => (
-								<li key={collection.name}>
-									<Link
-										to={`/collections/${collection.name}`}
-									>
-										{collection.name}
-									</Link>
-								</li>
-							))}
-						</ul>
-						<Link to={'/body-page-editor'}>BodyPageEditor</Link>
-					</nav>
+					<Route exact path="/collections" component={Collections} />
+					<Route exact path="/collections/:collection" component={Collections} />
+					<Route
+						exact
+						path="/collections/:collection/:mode"
+						component={CreateCollectionItem}
+					/>
+					<Route
+						exact
+						path="/collections/:collection/:mode/:id"
+						component={CreateCollectionItem}
+					/>
 
-					<Route path="/collections" component={Collections} />
 					{/* it's only for mockup testing  */}
 					{/* <Route path="/body-page-editor" component={BodyPageEditor} /> */}
 				</div>
