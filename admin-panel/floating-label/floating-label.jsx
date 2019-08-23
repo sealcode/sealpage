@@ -4,7 +4,7 @@ function FloatingLabel(props) {
 	return (
 		<div
 			className={`floating-label floating-label--${props.type ||
-				'input'}`}
+				'input'} ${props.className || ''}`}
 		>
 			<label
 				htmlFor={props.htmlFor}

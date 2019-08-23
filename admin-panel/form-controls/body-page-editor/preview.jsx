@@ -20,5 +20,5 @@ module.exports = function Preview({ elements }) {
 		generateRenderedHTML(uuid, elements).then(url => setPreviewUrl(url));
 	}, [JSON.stringify(elements)]);
 
-	return <iframe className="preview" src={previewUrl} />;
+	return <iframe className="body-page-editor__preview" src={previewUrl} />;
 };

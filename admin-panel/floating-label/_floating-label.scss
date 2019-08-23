@@ -2,8 +2,8 @@
 
 .floating-label {
 	position: relative;
-	margin: 0.5rem 0;
 	font-size: px-to-rem(14);
+	margin: 0.5rem 0;
 	input,
 	select,
 	textarea {
@@ -12,6 +12,9 @@
 	display: inline-block;
 
 	&--input {
+		margin: 0.5rem 0.5rem 0.5rem 0rem;
+		display: inline-flex;
+
 		& > input,
 		& > select {
 			width: 9rem;
@@ -59,17 +62,19 @@
 		}
 	}
 	&--textarea {
+		width: 100%;
+
 		@media (max-width: $desktop-breakpoint) {
 			max-width: 80%;
 		}
 
 		& > textarea {
-			width: px-to-rem(592);
 			min-height: px-to-rem(256);
 			resize: vertical;
 			border: 2px solid #999;
 			padding: 0.5rem;
 			color: #999;
+			width: 100%;
 
 			&:focus {
 				border: 2px solid #333;
