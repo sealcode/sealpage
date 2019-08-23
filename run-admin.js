@@ -25,8 +25,7 @@ module.exports = async function(sitemap_path, debug_opt) {
 
 	compiler.watch(
 		{
-			aggregateTimeout: 100,
-			poll: true,
+			ignored: /node_modules/,
 		},
 		(err, stats) => {
 			if (err) throw new Error(err);
