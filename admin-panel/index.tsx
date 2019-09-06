@@ -1,7 +1,8 @@
 import 'babel-polyfill';
-import React from 'react';
+import React, { ErrorInfo, ReactNode, ReactElement, Component } from 'react';
+
 import ReactDOM from 'react-dom';
-import { BrowserRouter as HashRouter, Link, Route } from 'react-router-dom';
+import { BrowserRouter as HashRouter, Route } from 'react-router-dom';
 import Collections from './collections/collections';
 import CreateCollectionItem from './collections/create-collection-item';
 
@@ -10,31 +11,41 @@ import Sidebar from './sidebar/sidebar';
 
 import './styles.scss';
 
-class ErrorBoundary extends React.Component {
-	constructor(props) {
+interface State {
+	hasError: boolean;
+	error: Error | null;
+}
+
+interface Props {
+	children: ReactNode;
+}
+
+class ErrorBoundary extends Component<Props, State> {
+	constructor(props: Props) {
 		super(props);
 		this.state = { hasError: false, error: null };
 	}
 
-	static getDerivedStateFromError(error) {
-		return { hasError: true, error: error };
+	static getDerivedStateFromError(error: Error): object {
+		return { hasError: true, error };
 	}
 
-	componentDidCatch(error, info) {
+	componentDidCatch(error: Error, info: ErrorInfo): void {
 		console.error(error, info);
 	}
 
-	render() {
-		if (this.state.hasError) {
+	render(): ReactNode {
+		const { hasError, error } = this.state;
+		if (hasError) {
 			// You can render any custom fallback UI
 			return (
 				<div>
 					<h1>Something went wrong.</h1>
 					<code>
 						<pre>
-							<strong>{this.state.error.message}</strong>
+							<strong>{(error as Error).message}</strong>
 							{'\n'}
-							{this.state.error.stack}
+							{(error as Error).stack}
 						</pre>
 					</code>
 				</div>
@@ -45,7 +56,7 @@ class ErrorBoundary extends React.Component {
 	}
 }
 
-function AppRouter() {
+const AppRouter = (): ReactElement => {
 	return (
 		<ErrorBoundary>
 			<HashRouter basename="/#">
@@ -53,7 +64,11 @@ function AppRouter() {
 				<div className="app-sealpage">
 					<Sidebar />
 					<Route exact path="/collections" component={Collections} />
-					<Route exact path="/collections/:collection" component={Collections} />
+					<Route
+						exact
+						path="/collections/:collection"
+						component={Collections}
+					/>
 					<Route
 						exact
 						path="/collections/:collection/:mode"
@@ -78,6 +93,6 @@ function AppRouter() {
 			</HashRouter>
 		</ErrorBoundary>
 	);
-}
+};
 
 ReactDOM.render(React.createElement(AppRouter), document.getElementById('app'));

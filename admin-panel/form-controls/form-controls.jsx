@@ -1,14 +1,17 @@
-const date = require('./date.jsx');
-const text = require('./text.jsx');
-const textarea = require('./textarea.jsx');
-const image = require('./image.jsx');
+import date from './date';
+import text from './text';
+import textarea from './textarea';
+import image from './image';
+import arrayOfObjects from './body-page-editor/body-page-editor';
 
-module.exports = {};
-module.exports.text = text;
-module.exports.date = date;
-module.exports.slug = text;
-module.exports.textarea = textarea;
-module.exports.image = image;
-module.exports[
-	'array-of-objects'
-] = require('./body-page-editor/body-page-editor.jsx');
+const controls = {
+	text: text,
+	date: date,
+	slug: text,
+	textarea: textarea,
+	image: image,
+};
+
+controls['array-of-objects'] = arrayOfObjects;
+
+export default controls;

@@ -1,10 +1,10 @@
-const React = require('react');
-const ElementEditor = require('./element-editor');
-const Preview = require('./preview');
-const SelectComponent = require('./select-component');
-const ElementButtons = require('./element-buttons');
-const FloatingLabel = require('../../floating-label/floating-label');
-const Button = require('../../button/button').default;
+import React from 'react';
+import ElementEditor from './element-editor';
+import Preview from './preview';
+import SelectComponent from './select-component';
+import ElementButtons from './element-buttons';
+import FloatingLabel from '../../floating-label/floating-label';
+import Button from '../../button/button';
 
 function addElement(elements, componentToCreate) {
 	return elements.concat([[componentToCreate, {}]]);
@@ -34,7 +34,7 @@ function minmax(min, max, value) {
 	return Math.min(Math.max(value, min), max);
 }
 
-module.exports = function bodyPageEditor({ value: elements, onChange }) {
+export default function bodyPageEditor({ value: elements, onChange }) {
 	if (elements === '') elements = [];
 
 	return (
@@ -107,4 +107,4 @@ module.exports = function bodyPageEditor({ value: elements, onChange }) {
 			</div>
 		</FloatingLabel>
 	);
-};
+}

@@ -1,5 +1,5 @@
-const React = require('react');
-const FloatingLabel = require('../floating-label/floating-label');
+import React from 'react';
+import FloatingLabel from '../floating-label/floating-label';
 
 function date(props) {
 	return React.createElement(
@@ -21,4 +21,4 @@ function date(props) {
 	);
 }
 
-module.exports = date;
+export default date;

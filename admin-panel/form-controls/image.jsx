@@ -1,6 +1,5 @@
-const React = require('react');
-const { useState } = React;
-const FloatingLabel = require('../floating-label/floating-label');
+import React, { useState } from 'react';
+import FloatingLabel from '../floating-label/floating-label';
 
 function image(props) {
 	const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
@@ -39,4 +38,4 @@ function image(props) {
 	);
 }
 
-module.exports = image;
+export default image;

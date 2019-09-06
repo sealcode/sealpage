@@ -27,11 +27,11 @@ module.exports = async function(sitemap_path, debug_opt) {
 		{
 			ignored: /node_modules/,
 		},
-		(err, stats) => {
-			if (err) throw new Error(err);
+		(_, stats) => {
 			//Detailed compiler output
 			if (debug_opt) console.log(stats);
 			console.log('Build successful'.blue.bgYellow);
+			console.log(stats.toString('errors-warnings'));
 		}
 	);
 };

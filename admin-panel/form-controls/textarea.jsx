@@ -1,5 +1,5 @@
-const React = require('react');
-const FloatingLabel = require('../floating-label/floating-label');
+import React from 'react';
+import FloatingLabel from '../floating-label/floating-label';
 
 function textarea(props) {
 	return (
@@ -17,4 +17,4 @@ function textarea(props) {
 	);
 }
 
-module.exports = textarea;
+export default textarea;

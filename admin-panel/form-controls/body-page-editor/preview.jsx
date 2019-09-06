@@ -1,6 +1,5 @@
-const React = require('react');
-const { useState, useEffect } = React;
-const uuidv4 = require('uuid/v4');
+import React, { useState, useEffect } from 'react';
+import uuidv4 from 'uuid/v4';
 
 async function generateRenderedHTML(uuid, elements) {
 	return await fetch('/api/v1/render', {
@@ -12,7 +11,7 @@ async function generateRenderedHTML(uuid, elements) {
 	}).then(response => response.text());
 }
 
-module.exports = function Preview({ elements }) {
+export default function Preview({ elements }) {
 	const [previewUrl, setPreviewUrl] = useState('');
 	const [uuid] = useState(uuidv4());
 
@@ -21,4 +20,4 @@ module.exports = function Preview({ elements }) {
 	}, [JSON.stringify(elements)]);
 
 	return <iframe className="preview" src={previewUrl} />;
-};
+}

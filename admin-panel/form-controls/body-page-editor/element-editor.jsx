@@ -1,16 +1,16 @@
-const React = require('react');
-const formControls = require('../form-controls.jsx');
-const { components } = require('../../../components');
+import React from 'react';
+import formControls from '../form-controls';
+import { components } from '../../../components';
 
-module.exports = function ElementEditor({
+export default function ElementEditor({
 	componentName,
 	componentProps,
 	onChange,
 }) {
-	let propsControls = components[componentName].propsControls();
+	const propsControls = components[componentName].propsControls();
 
 	return Object.keys(propsControls).map(prop => {
-		let { control: formControlName } = propsControls[prop];
+		const { control: formControlName } = propsControls[prop];
 		return React.createElement(formControls[formControlName], {
 			key: componentName,
 			name: prop,
@@ -24,4 +24,4 @@ module.exports = function ElementEditor({
 			label: prop,
 		});
 	});
-};
+}

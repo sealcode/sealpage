@@ -1,10 +1,11 @@
-const React = require('react');
+import React from 'react';
 const e = React.createElement;
-const { components } = require('../../../components');
-const FloatingLabel = require('../../floating-label/floating-label');
+import { components } from '../../../components';
+import FloatingLabel from '../../floating-label/floating-label';
+import uuidv4 from 'uuid/v4';
 
 function selectComponent(props) {
-	const uid = require('uuid/v4')();
+	const uid = uuidv4();
 	return e(
 		FloatingLabel,
 		{
@@ -41,4 +42,4 @@ function selectComponent(props) {
 	);
 }
 
-module.exports = selectComponent;
+export default selectComponent;

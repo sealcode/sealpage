@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 function FloatingLabel(props) {
 	return (
@@ -18,4 +18,4 @@ function FloatingLabel(props) {
 	);
 }
 
-module.exports = FloatingLabel;
+export default FloatingLabel;

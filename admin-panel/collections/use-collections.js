@@ -1,4 +1,4 @@
-const { useState } = require('react');
+import { useState } from 'react';
 
 let collections_cache = [];
 let loaded = false;

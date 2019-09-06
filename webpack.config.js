@@ -5,7 +5,7 @@ module.exports = ec_path => ({
 	devtool: 'eval-source-maps',
 	entry: {
 		'bundle.js': [
-			path.resolve(__dirname, './admin-panel/index.jsx'),
+			path.resolve(__dirname, './admin-panel/index.tsx'),
 			...ec_path,
 		],
 	},
@@ -66,10 +66,15 @@ module.exports = ec_path => ({
 					},
 				],
 			},
+			{
+				test: /\.tsx?$/,
+				use: r('ts-loader'),
+				exclude: /node_modules/,
+			},
 		],
 	},
 	resolve: {
-		extensions: ['.js', '.jsx', '.scss', '.svg'],
+		extensions: ['.js', '.jsx', '.scss', '.svg', '.ts', '.tsx'],
 	},
 	mode: 'development',
 });
