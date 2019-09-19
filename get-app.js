@@ -7,6 +7,7 @@ const util = require('util');
 const writeFile = util.promisify(fs.writeFile);
 const exists = util.promisify(fs.access);
 const mkdir = util.promisify(fs.mkdir);
+const Settings = require('./lib/settings');
 
 const fieldTypes = {
 	slug: require('./field-types/slug'),
@@ -53,9 +54,10 @@ async function renderPreview(uuid, elements) {
 	return `${path_prefix}/index.html?${uuidv4()}`;
 }
 
-module.exports = config => {
+module.exports = ({ config, settings_source = {} }) => {
 	const app = new Sealious.App(config, manifest);
 
+	S.Settings = new Settings(settings_source);
 	for (const type in fieldTypes) {
 		fieldTypes[type](app);
 	}
