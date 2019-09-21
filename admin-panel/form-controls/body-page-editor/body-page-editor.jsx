@@ -12,20 +12,11 @@ module.exports = function bodyPageEditor({ value: elements, onChange }) {
 	const [isZenMode, setZenMode] = useState(false);
 
 	return (
-		<FloatingLabel
-			className={isZenMode ? 'zen-mode' : ''}
-			type="div"
-			label="Body"
-		>
+		<FloatingLabel isZenMode={isZenMode} type="div" label="Body">
 			<div className="body-page-editor">
 				<ComponentList elements={elements} onChange={onChange} />
 				<Preview elements={elements} />
-				<Controls
-					isZenMode={isZenMode}
-					setZenMode={setZenMode}
-					elements={elements}
-					onChange={onChange}
-				/>
+				<Controls {...{ isZenMode, setZenMode, elements, onChange }} />
 			</div>
 		</FloatingLabel>
 	);

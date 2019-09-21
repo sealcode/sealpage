@@ -28,7 +28,7 @@ module.exports = function Controls({
 					icon="&#xe03f;"
 					modifier="secondary"
 				>
-					zen mode
+					{isZenMode ? 'Turn off zen mode' : 'Zen mode'}
 				</Button>
 			</div>
 			<div className="body-page-editor__control-group--right">
