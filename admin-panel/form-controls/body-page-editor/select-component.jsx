@@ -1,10 +1,10 @@
 import React from 'react';
 const e = React.createElement;
-import { components } from '../../../components';
 import FloatingLabel from '../../floating-label/floating-label';
 import uuidv4 from 'uuid/v4';
+import { components } from '../../../components';
 
-function selectComponent(props) {
+function SelectComponent(props) {
 	const uid = uuidv4();
 	return e(
 		FloatingLabel,
@@ -42,4 +42,4 @@ function selectComponent(props) {
 	);
 }
 
-export default selectComponent;
+export default SelectComponent;

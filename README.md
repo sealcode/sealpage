@@ -48,11 +48,19 @@ To build, run:
 sealpage build
 ```
 
-To enable admin dashboard, run:
+To enable admin dashboard first run:
+
+```
+npm run watch
+```
+
+inside **sealpage repo** to build typescript files and then:
 
 ```
 sealpage admin
 ```
+
+inside **webpage repo** to run the actual dashboard.
 
 Note that both `build` and `admin` take arguments, so that site dir structure is more customizable.
 

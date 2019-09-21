@@ -1,4 +1,4 @@
-const Component = require('../component.class');
+import Component from '../component.class';
 
 /*
 	image_path: string
@@ -15,6 +15,15 @@ const Component = require('../component.class');
     }
 */
 
+interface Props {
+	image_path: string;
+	resolutions: Array<number>;
+	quality: number;
+	sizes_attr: string;
+	alt: string;
+	options: object;
+}
+
 class ResponsiveImage extends Component {
 	async renderFn(
 		s,
@@ -25,7 +34,7 @@ class ResponsiveImage extends Component {
 			sizes_attr,
 			alt = '',
 			options = {},
-		}
+		}: Props
 	) {
 		const sharp = s.node_require('sharp');
 		const path = s.node_require('path');
@@ -33,12 +42,15 @@ class ResponsiveImage extends Component {
 		const locreq = s.node_require('locreq')(__dirname);
 		const fs = s.node_require('fs');
 		const hashFile = s.node_require(
-			path.resolve(__dirname, '../../lib/hash-file.js')
-		);
+			path.resolve(__dirname, '../../lib/hash-file')
+		).default;
 		const imgSize = s.node_require('image-size');
 
 		if (!image_path) {
-			image_path = locreq.resolve('assets/sealpage-logo.png');
+			image_path = path.resolve(
+				__dirname,
+				'../../assets/sealpage-logo.png'
+			);
 		}
 
 		//If resolutions array is not specified, fill it with values: 100, 200, ..., <img_width>
@@ -126,4 +138,4 @@ class ResponsiveImage extends Component {
 	}
 }
 
-module.exports = ResponsiveImage;
+export default ResponsiveImage;

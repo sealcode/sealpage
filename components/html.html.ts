@@ -1,9 +1,9 @@
-const hashFile = require('../lib/hash-file.js');
-const navbar = require('./navbar/navbar.html');
+import hashFile from '../lib/hash-file';
+import navbar from './navbar/navbar.html';
 
 const styleCssHash = hashFile('public/styles/style.css');
 
-module.exports = async ({ title, class_name }, body) => /* HTML */ `
+export default async ({ title, class_name }, body) => /* HTML */ `
 	<!DOCTYPE html>
 	<html lang="pl">
 		<head>

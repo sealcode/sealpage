@@ -1,5 +1,5 @@
-const Component = require('../component.class');
-const marked = require('marked');
+import Component from '../component.class';
+import marked from 'marked';
 
 class Markdown extends Component {
 	renderFn(s, { markdown_source }) {
@@ -13,4 +13,4 @@ class Markdown extends Component {
 	}
 }
 
-module.exports = Markdown;
+export default Markdown;

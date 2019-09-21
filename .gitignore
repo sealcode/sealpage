@@ -7,3 +7,4 @@ public-admin/*
 assets/fonts
 assets/icons
 admin-panel/webicons.scss
+dist/*

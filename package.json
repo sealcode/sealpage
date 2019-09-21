@@ -2,12 +2,15 @@
 	"name": "sealpage",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
+	"main": "./dist/index.js",
 	"bin": {
-		"sealpage": "./cli.js"
+		"sealpage": "./dist/cli.js"
 	},
 	"scripts": {
-		"test": "mocha ./components/**/*.test.js ./test/*.js"
+		"test": "ts-mocha --paths ./components/**/*.test.ts ./test/**/*.ts -p test/test.tsconfig.json",
+		"watch": "npm run copy-assets && tsc -p backend.tsconfig.json -w",
+		"build": "npm run copy-assets && tsc -p backend.tsconfig.json",
+		"copy-assets": "cp -R -u -p assets dist"
 	},
 	"repository": {
 		"type": "git",
@@ -17,6 +20,8 @@
 	"license": "ISC",
 	"dependencies": {
 		"@frctl/fractal": "^1.1.7",
+		"@types/fs-extra": "^8.0.0",
+		"@types/htmlparser2": "^3.10.1",
 		"@types/node": "^12.0.12",
 		"@types/react": "^16.8.23",
 		"@types/react-dom": "^16.8.4",
@@ -53,6 +58,8 @@
 		"@babel/preset-env": "^7.4.4",
 		"@babel/preset-react": "^7.0.0",
 		"@babel/register": "^7.4.4",
+		"@types/bluebird": "^3.5.27",
+		"@types/mocha": "^5.2.7",
 		"@typescript-eslint/eslint-plugin": "^2.1.0",
 		"@typescript-eslint/parser": "^2.1.0",
 		"babel-cli": "^6.26.0",
@@ -62,12 +69,14 @@
 		"chalk": "^2.4.2",
 		"css-loader": "^3.0.0",
 		"eslint": "^5.16.0",
+		"eslint-config-prettier": "^6.2.0",
 		"eslint-plugin-react": "^7.13.0",
 		"file-loader": "^4.0.0",
 		"node-sass": "^4.12.0",
 		"react-svg-loader": "^3.0.3",
 		"sass-loader": "^7.1.0",
 		"style-loader": "^0.23.1",
+		"ts-mocha": "^6.0.0",
 		"webpack": "^4.32.2"
 	}
 }

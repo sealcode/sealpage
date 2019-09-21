@@ -1,4 +1,4 @@
-const Component = require('../component.class');
+import Component from '../component.class';
 
 class Navbar extends Component {
 	renderFn(s, { title }) {
@@ -13,4 +13,4 @@ class Navbar extends Component {
 	}
 }
 
-module.exports = Navbar;
+export default Navbar;

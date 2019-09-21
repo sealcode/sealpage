@@ -1,6 +1,5 @@
-const Settings = require('../lib/settings');
-const fs = require('fs');
-const assert = require('assert');
+import Settings from '../../lib/settings';
+import * as assert from 'assert';
 
 describe('Settings', function() {
 	it('should load and add config from the provided source', async function() {
@@ -13,10 +12,11 @@ describe('Settings', function() {
 
 		for (const source of [
 			{ foo: 'bar' },
-			'./test-settings.js',
-			'./test-settings.json',
+			require('./test-settings.json'),
+			require('./test-settings'),
 		]) {
 			const sm = new Settings(source);
+
 			assert.deepStrictEqual(
 				[...default_settings, 'foo'],
 				Object.keys(sm.getConfig())
@@ -25,18 +25,18 @@ describe('Settings', function() {
 	});
 
 	it('should be able to create, read, edit and remove settings from the settings', async function() {
-		const sm = new Settings(__dirname);
+		const sm = new Settings();
 
-		await sm.addField({ key: 'foo', value: 'bar', type: 'baz' });
+		await sm.addField({ key: 'foo', value: 'bar', field_type: 'baz' });
 		await sm.removeField('page_name');
-		await sm.editField({ key: 'logo', value: 'ogol', type: 'seal' });
+		await sm.editField({ key: 'logo', value: 'ogol', field_type: 'seal' });
 
 		const config = sm.getConfig();
 
 		assert.equal(config.logo.value, 'ogol');
-		assert.equal(config.logo.type, 'seal');
+		assert.equal(config.logo.field_type, 'seal');
 		assert.equal(config.foo.value, 'bar');
-		assert.equal(config.foo.type, 'baz');
+		assert.equal(config.foo.field_type, 'baz');
 		assert.equal(config.page_name, undefined);
 	});
 });

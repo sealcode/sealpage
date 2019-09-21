@@ -1,6 +1,6 @@
-const fs = require('fs');
-const path = require('path');
-const util = require('util');
+import * as fs from 'fs'
+import * as path from 'path';
+import * as util from 'util'
 
 const access = util.promisify(fs.access);
 const writeFile = util.promisify(fs.writeFile);
@@ -74,4 +74,4 @@ class S {
 	}
 }
 
-module.exports = S;
+export default S;

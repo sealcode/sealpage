@@ -1,13 +1,13 @@
-const Sealious = require('sealious');
-const S = require('./lib/s');
-const path = require('path');
-const fs = require('fs');
-const uuidv4 = require('uuid/v4');
-const util = require('util');
+import Sealious from 'sealious';
+import S from './lib/s';
+import path from 'path';
+import fs from 'fs';
+import uuidv4 from 'uuid/v4';
+import util from 'util';
+import Settings from './lib/settings';
 const writeFile = util.promisify(fs.writeFile);
 const exists = util.promisify(fs.access);
 const mkdir = util.promisify(fs.mkdir);
-const Settings = require('./lib/settings');
 
 const fieldTypes = {
 	slug: require('./field-types/slug'),
@@ -54,12 +54,13 @@ async function renderPreview(uuid, elements) {
 	return `${path_prefix}/index.html?${uuidv4()}`;
 }
 
-module.exports = ({ config, settings_source = {} }) => {
+export default function({ config, settings_source = {} }) {
 	const app = new Sealious.App(config, manifest);
 
 	S.Settings = new Settings(settings_source);
+
 	for (const type in fieldTypes) {
-		fieldTypes[type](app);
+		fieldTypes[type].default(app);
 	}
 
 	app.WwwServer.static_route(
@@ -76,4 +77,4 @@ module.exports = ({ config, settings_source = {} }) => {
 	);
 
 	return app;
-};
+}

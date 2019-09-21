@@ -1,13 +1,13 @@
-const { promisify } = require('util');
-const fs = require('fs');
-const cp = require('child_process');
+import { promisify } from 'util';
+import fs from 'fs';
+import cp from 'child_process';
 const access = promisify(fs.access);
-const { resolve } = require('path');
+import { resolve } from 'path';
 const exec = promisify(cp.exec);
-require('colors');
+import colors from 'colors';
 
 async function icons_require() {
-	const root_path = resolve(__dirname, '../');
+	const root_path = resolve(__dirname, '../../');
 	const dest = `${root_path}/assets/icons`;
 	const extensions = ['.eot', '.svg', '.ttf', '.woff'];
 
@@ -21,23 +21,23 @@ async function icons_require() {
 	}
 
 	if (are_icons_avaliable instanceof Error) {
-		console.log('Icons not found, downloading...'.yellow);
+		console.log(colors.yellow('Icons not found, downloading...'));
 		for (const ext of extensions) {
 			await exec(`mkdir -p ${dest} &&
 	        wget -O ${dest}/dripicons-v2${ext} "https://github.com/amitjakhu/dripicons/raw/master/webfont/fonts/dripicons-v2${ext}"`).catch(
 				err => console.error(err)
 			);
 		}
-		console.log('Fonts downloaded, proceeding...'.green);
-		console.log('Downloading webicons.css file...'.yellow);
+		console.log(colors.green('Fonts downloaded, proceeding...'));
+		console.log(colors.yellow('Downloading webicons.css file...'));
 
 		await exec(
 			`curl "https://raw.githubusercontent.com/amitjakhu/dripicons/master/webfont/webfont.css" | \
-            sed "s,fonts\/,..\/assets\/icons\/," > ${root_path}/admin-panel/webicons.scss`
+	 			sed "s,fonts\/,..\/assets\/icons\/," > ${root_path}/admin-panel/webicons.scss`
 		).catch(err => console.error(err));
 	} else {
-		console.log('Icons found, proceeding...'.green);
+		console.log(colors.green('Icons found, proceeding...'));
 	}
 }
 
-module.exports = icons_require;
+export default icons_require;

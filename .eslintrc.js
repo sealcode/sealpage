@@ -13,6 +13,7 @@ module.exports = {
 		'eslint:recommended',
 		'plugin:react/recommended',
 		'plugin:@typescript-eslint/recommended',
+		'prettier',
 	],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
@@ -27,12 +28,10 @@ module.exports = {
 		tsconfigRootDir: __dirname,
 	},
 	rules: {
-		indent: ['error', 'tab'],
-		'linebreak-style': ['error', 'unix'],
 		quotes: ['error', 'single'],
 		semi: ['error', 'always'],
 		'no-console': 'off',
-		'no-mixed-spaces-and-tabs': ['error', 'smart-tabs'],
 		'react/prop-types': 0,
+		camelcase: [0, { properties: 'never' }],
 	},
 };
