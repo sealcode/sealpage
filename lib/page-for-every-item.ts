@@ -1,4 +1,4 @@
-const colors = require('colors');
+import colors from 'colors';
 
 async function getItems(app, collectionName) {
 	return await app.run_action(
@@ -26,15 +26,15 @@ const pageForEveryItem = function(
 		ret.index = async () => indexTemplate(items);
 
 		console.log(
-			`${
-				`dispatched ${
-					JSON.stringify(Object.keys(ret)).green
-				} pages to render`.gray
-			} in '${collectionName.green}' directory`
+			`${colors.gray(
+				`dispatched ${colors.green(
+					JSON.stringify(Object.keys(ret))
+				)} pages to render`
+			)} in '${colors.green(collectionName)}' directory`
 		);
 
 		return ret;
 	});
 };
 
-module.exports = pageForEveryItem;
+export default pageForEveryItem;

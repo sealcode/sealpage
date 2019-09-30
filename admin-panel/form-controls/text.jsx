@@ -1,5 +1,5 @@
-const React = require('react');
-const FloatingLabel = require('../floating-label/floating-label');
+import React from 'react';
+import FloatingLabel from '../floating-label/floating-label';
 
 function text(props) {
 	return (
@@ -18,4 +18,4 @@ function text(props) {
 	);
 }
 
-module.exports = text;
+export default text;

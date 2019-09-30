@@ -1,8 +1,8 @@
-const Sealious = require('sealious');
-const assert = require('assert');
+import Sealious from 'sealious';
+import assert from 'assert';
 
-module.exports = app =>
-	app.createChip(Sealious.FieldType, {
+export default function(app) { 
+	return app.createChip(Sealious.FieldType, {
 		name: 'slug',
 		extends: 'text',
 		old_value_sensitive: true,
@@ -35,5 +35,6 @@ module.exports = app =>
 					} set to ${new_value}, old value: ${old_value}`
 				);
 			}
-		},
+		}
 	});
+}

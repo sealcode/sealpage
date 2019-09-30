@@ -1,16 +1,16 @@
-const Markdown = require('./markdown/markdown.html');
-const Navbar = require('./navbar/navbar.html');
-const DownloadFileButton = require('./download-file-button/download-file-button');
-const ResponsiveImage = require('./responsive-image/responsive-image.html.js');
+import Markdown from './markdown/markdown.html';
+import Navbar from './navbar/navbar.html';
+import DownloadFileButton from './download-file-button/download-file-button';
+import ResponsiveImage from './responsive-image/responsive-image.html';
 
-const components = {
+export const components = {
 	Markdown,
 	Navbar,
 	DownloadFileButton,
 	ResponsiveImage,
 };
 
-function register(externalComponents) {
+export function register(externalComponents) {
 	for (let i = 0; i < externalComponents.length; i++) {
 		const name = externalComponents[i].name;
 
@@ -26,8 +26,3 @@ function register(externalComponents) {
 		components[name] = externalComponents[i].component;
 	}
 }
-
-module.exports = {
-	components,
-	register,
-};

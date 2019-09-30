@@ -1,17 +1,20 @@
-const ResponsiveImage = require('../responsive-image.html.js');
-const fs = require('fs');
-const assert = require('assert');
-const path = require('path');
-const { execSync } = require('child_process');
-const { DomHandler, Parser } = require('htmlparser2');
-const { promisify } = require('util');
-const readdir = promisify(fs.readdir);
+import ResponsiveImage from '../responsive-image.html';
+import * as fs from 'fs';
+import * as assert from 'assert';
+import * as path from 'path';
+import { execSync } from 'child_process';
+import { DomHandler, Parser, DomElement } from 'htmlparser2';
+import { promisify } from 'util';
+import S from '../../../lib/s';
+import * as locreq from 'locreq';
 
-const S = require('../../../lib/s');
-s = new S({ output_dir: __dirname, path_prefix: '' });
+const readdir = promisify(fs.readdir);
+const lrq = locreq(__dirname);
+
+const s = new S({ output_dir: __dirname, path_prefix: '' });
 
 const resolutions = [200, 300];
-const file_path = path.resolve(__dirname, './test-img.jpg');
+const file_path = lrq.resolve('dist/assets/test-img.jpg');
 
 const resize_data = {
 	image_path: file_path,
@@ -55,13 +58,14 @@ describe('responsive-image-creator', function() {
 
 	it('Should resolve a valid responsive html picture tag', async function() {
 		const result = await new ResponsiveImage(s).render(resize_data);
-		const handler = new DomHandler(
-			function(err, dom) {
+		const handler: DomHandler = new DomHandler(
+			function(err, dom): void {
 				if (err) throw new Error(err);
-				picture_node = dom.find(
+				const picture_node: any = dom.find(
 					node => node.name === 'picture' && node.type === 'tag'
 				);
-				for (let child of picture_node.children) {
+				for (const child of (picture_node as DomElement)
+					.children as Array<any>) {
 					if (child.name === 'source') {
 						assert(
 							/images\/test-img-\d{3}\.[a-z0-9]{32}\.(webp|jpg)\s[0-9]{3}w/.test(
@@ -81,7 +85,7 @@ describe('responsive-image-creator', function() {
 	it('Should change hash if input file or deps changed', async function() {
 		const changed_image_data = {
 			...resize_data,
-			image_path: path.resolve(__dirname, './test-img-2.jpg'),
+			image_path: lrq.resolve('dist/assets/test-img-2.jpg'),
 		};
 
 		const changed_dependency_data = {

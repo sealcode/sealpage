@@ -1,7 +1,5 @@
-const React = require('react');
-const { useEffect, useState } = React;
+import React, { useState, useEffect } from 'react';
 import { Route, Link } from 'react-router-dom';
-import CreateCollectionItem from './create-collection-item.js';
 import Loading from '../loading/loading';
 import useCollections from './use-collections';
 

@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 function elementButtons({ elements, index, handlers }) {
 	const [changeElementPosition, removeElement, onChange] = handlers;
@@ -32,4 +32,4 @@ function elementButtons({ elements, index, handlers }) {
 	);
 }
 
-module.exports = elementButtons;
+export default elementButtons;

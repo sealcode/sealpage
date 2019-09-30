@@ -1,13 +1,12 @@
-const fs = require('fs');
-const path = require('path');
-const util = require('util');
+import * as fs from 'fs'
+import * as path from 'path';
+import * as util from 'util'
 
 const access = util.promisify(fs.access);
 const writeFile = util.promisify(fs.writeFile);
 
 const md5 = require('md5');
 const makeDir = require('make-dir');
-
 const { components } = require('../components');
 
 class S {
@@ -24,6 +23,10 @@ class S {
 				this
 			);
 		}
+	}
+
+	get Settings() {
+		return this.constructor.Settings;
 	}
 
 	async addOutputFile({ output_subdir, base_name, generator, deps }) {
@@ -71,4 +74,4 @@ class S {
 	}
 }
 
-module.exports = S;
+export default S;

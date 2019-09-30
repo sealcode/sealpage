@@ -1,9 +1,9 @@
-const { renderer } = require('../index.js');
-const Navbar = require('../components/navbar/navbar.html.js');
-const path = require('path');
-const fs = require('fs-extra');
-const S = require('../lib/s.js');
-const assert = require('assert');
+import renderer from '../lib/render-site';
+import Navbar from '../components/navbar/navbar.html';
+import * as path from 'path';
+import * as fs from 'fs-extra';
+import S from '../lib/s';
+import * as assert from 'assert';
 
 const test_folder = './test_output';
 
@@ -31,7 +31,7 @@ describe('Build tests', function() {
 			},
 		};
 
-		await renderer(sitemap, path.resolve(__dirname, test_folder));
+		await renderer(sitemap, path.resolve(__dirname, test_folder), false);
 
 		const created_file = path.resolve(__dirname, test_folder, 'index.html');
 
@@ -51,7 +51,7 @@ describe('Build tests', function() {
 				return nav.renderFn(s, { title: 'Sample Title' });
 			},
 		};
-		await renderer(sitemap, path.resolve(__dirname, test_folder));
+		await renderer(sitemap, path.resolve(__dirname, test_folder), false);
 
 		const created_file = path.resolve(__dirname, test_folder, 'index.html');
 

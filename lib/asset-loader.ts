@@ -1,7 +1,7 @@
-const fs = require('fs');
-const path = require('path');
-const { promisify } = require('util');
-const hashFile = require('./hash-file.js');
+import fs from 'fs';
+import path from 'path';
+import { promisify } from 'util';
+import hashFile from './hash-file';
 
 const copyFile = promisify(fs.copyFile);
 const exists = promisify(fs.access);

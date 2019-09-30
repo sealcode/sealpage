@@ -1,4 +1,4 @@
-const Component = require('../component.class');
+import Component from '../component.class';
 
 class DownloadFileButton extends Component {
 	async renderFn(s, { text }) {
@@ -10,18 +10,19 @@ class DownloadFileButton extends Component {
 		/* eslint-disable indent */
 		return /* HTML */ `
 			<a
-				href="${
-					await s.addOutputFile({
-						output_subdir: './assets/images/',
-						base_name: 'example-file.png',
-						generator: async function() {
-							return await readFile(
-								path.resolve(__dirname, './example-file.png')
-							);
-						},
-						deps: [],
-					})
-				}"
+				href="${await s.addOutputFile({
+					output_subdir: './assets/images/',
+					base_name: 'example-file.png',
+					generator: async function() {
+						return await readFile(
+							path.resolve(
+								__dirname,
+								'../../assets/example-file.png'
+							)
+						);
+					},
+					deps: [],
+				})}"
 				>${text}</a
 			>
 		`;
@@ -32,4 +33,4 @@ class DownloadFileButton extends Component {
 	}
 }
 
-module.exports = DownloadFileButton;
+export default DownloadFileButton;

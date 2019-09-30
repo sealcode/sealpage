@@ -1,12 +1,13 @@
 //Checks if user has necessary fonts. If not, download them.
 
-const fs = require('fs');
-const cp = require('child_process');
-const { promisify } = require('util');
+import fs from 'fs';
+import cp from 'child_process';
+import { promisify } from 'util';
 const exec = promisify(cp.exec);
 const access = promisify(fs.access);
-const { resolve } = require('path');
-require('colors');
+import lq from 'locreq';
+const locreq = lq(__dirname);
+import colors from 'colors';
 
 async function fonts_require() {
 	//Add required fonts to the dictionary
@@ -14,7 +15,6 @@ async function fonts_require() {
 		'ibm-plex-sans': ['regular', 500, 600, 700],
 	};
 
-	const root_path = resolve(__dirname, '../');
 	console.log('Checking required fonts...');
 
 	let are_fonts_present = false;
@@ -23,14 +23,14 @@ async function fonts_require() {
 	//Each font's files lie in a dir named after font in the fonts directory
 	for (let font_name of font_names) {
 		are_fonts_present = await access(
-			resolve(__dirname, `../assets/fonts/${font_name}`)
+			locreq.resolve('assets/fonts/' + font_name)
 		).catch(err => new Error(err));
 	}
 
 	if (are_fonts_present instanceof Error) {
-		console.log('Fonts not present, downloading necessary fonts...'.yellow);
+		console.log(colors.yellow('Fonts not present, downloading necessary fonts...'));
 		for (let font of font_names) {
-			const dest = `${root_path}/assets/fonts/${font}`;
+			const dest = `${locreq.resolve('assets/fonts')}/${font}`;
 			const { stdout } = await exec(
 				`mkdir -p ${dest} &&
 	        wget -O ${font}.zip "https://google-webfonts-helper.herokuapp.com/api/fonts/${font}?download=zip&subsets=latin-ext&variants=${necessary_fonts[font]}" &&
@@ -40,8 +40,8 @@ async function fonts_require() {
 			console.log(stdout);
 		}
 	} else {
-		console.log('All fonts are available, proceeding...'.green);
+		console.log(colors.green('All fonts are available, proceeding...'));
 	}
 }
 
-module.exports = fonts_require;
+export default fonts_require;

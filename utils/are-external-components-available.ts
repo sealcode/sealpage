@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 function areExternalComponentsAvaliable(ec_path) {
 	if (ec_path) {
@@ -24,4 +24,4 @@ function areExternalComponentsAvaliable(ec_path) {
 	return false;
 }
 
-module.exports = areExternalComponentsAvaliable;
+export default areExternalComponentsAvaliable;

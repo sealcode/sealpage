@@ -1,13 +1,10 @@
-const React = require('react');
-const useState = React.useState;
+import React, { useState } from 'react';
+import Preview from './preview';
+import FloatingLabel from '../../floating-label/floating-label';
+import ComponentList from './component-list';
+import Controls from './controls';
 
-const Preview = require('./preview');
-const ComponentList = require('./component-list');
-const Controls = require('./controls');
-
-const FloatingLabel = require('../../floating-label/floating-label');
-
-module.exports = function bodyPageEditor({ value: elements, onChange }) {
+export default function bodyPageEditor({ value: elements, onChange }) {
 	if (elements === '') elements = [];
 	const [isZenMode, setZenMode] = useState(false);
 
@@ -20,4 +17,4 @@ module.exports = function bodyPageEditor({ value: elements, onChange }) {
 			</div>
 		</FloatingLabel>
 	);
-};
+}
