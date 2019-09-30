@@ -1,12 +1,16 @@
-const React = require('react');
-const SelectComponent = require('./select-component');
-const Button = require('../../button/button').default;
+// const React = require('react');
+// const SelectComponent = require('./select-component');
+// const Button = require('../../button/button').default;
+
+import React from 'react';
+import SelectComponent from './select-component';
+import Button from '../../button/button';
 
 function addElement(elements, componentToCreate) {
 	return elements.concat([[componentToCreate, {}]]);
 }
 
-module.exports = function Controls({
+export default function Controls({
 	isZenMode,
 	setZenMode,
 	elements,
@@ -41,4 +45,4 @@ module.exports = function Controls({
 			</div>
 		</div>
 	);
-};
+}

@@ -1,6 +1,6 @@
-const React = require('react');
-const ElementEditor = require('./element-editor');
-const ElementButtons = require('./element-buttons');
+import React from 'react';
+import ElementEditor from './element-editor';
+import ElementButtons from './element-buttons';
 
 function removeElement(elements, index) {
 	elements.splice(index, 1);
@@ -26,7 +26,7 @@ function setElementProps(elements, index, newProps) {
 	return [...elements];
 }
 
-module.exports = function ComponentList({ elements, onChange }) {
+export default function ComponentList({ elements, onChange }) {
 	return (
 		<div className="body-page-editor__components-list">
 			{elements.map(([componentName, componentProps], index) => (
@@ -51,4 +51,4 @@ module.exports = function ComponentList({ elements, onChange }) {
 			))}
 		</div>
 	);
-};
+}
