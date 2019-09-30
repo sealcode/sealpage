@@ -1,6 +1,6 @@
 import colors from 'colors';
 
-async function getItems(app, collectionName) {
+export async function getItems(app, collectionName) {
 	return await app.run_action(
 		new app.Sealious.SuperContext(),
 		['collections', collectionName],
@@ -8,7 +8,7 @@ async function getItems(app, collectionName) {
 	);
 }
 
-const pageForEveryItem = function(
+export function pageForEveryItem(
 	app,
 	collectionName,
 	itemTemplate,
@@ -35,6 +35,4 @@ const pageForEveryItem = function(
 
 		return ret;
 	});
-};
-
-export default pageForEveryItem;
+}
