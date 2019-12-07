@@ -195,6 +195,22 @@ Here we've added some new stuff. propsControls now returns **hello** - an object
 
 Restart the server and see what changes. Your component is now configurable!
 
+## File optimization
+
+You can use the `s` object to optimize your assets. Supported file formats are:
+* JPG
+* PNG
+* WEBP
+* GIF
+* SVG
+
+To run optimization process call:
+```js
+s.optimizeFile(file: Buffer, output_path: string): void
+```
+
+* file -> File Buffer.
+* output_path -> Path where the optimized files will be saved.
 
 ## Settings
 `S` object can manipulate app's global settings with built-in **Settings Manager**. Since SM is a class field you can access it both from the class directly or the class instance like this:

@@ -42,8 +42,7 @@ async function renderPreview(uuid, elements) {
 	let output_dir = path.resolve(temporary_path);
 
 	const path_prefix = `/previews/${uuid}`;
-	const s = new S({ output_dir, path_prefix });
-
+	const s = new S({ output_dir, path_prefix, preview_mode: true });
 	// render preview using component instances initialized by s object
 	for (const [componentName, componentProps] of elements) {
 		html += await s.components[componentName].render(componentProps);

@@ -1,18 +1,16 @@
 import Component from '../component.class';
 
 /*
-	image_path: string
-	out_path: string, output path
+	image_path: string out_path: string, output path
 	resolutions: array of sizes ie. [200, 150 ...]
 	quality: number, quality of the resized image
-    sizes_attr: string, sizes attribute for responsive img html tag
-    alt: string, img's alt attribute
-    options: options parameters for certain formats i.e
-    {
-        jpg: { options },
-        webp: { options }
-        ....
-    }
+   sizes_attr: string, sizes attribute for responsive img html tag alt: string, img's alt attribute
+   options: options parameters for certain formats i.e
+   {
+       jpg: { options },
+       webp: { options }
+       ....
+   }
 */
 
 interface Props {
@@ -38,13 +36,14 @@ class ResponsiveImage extends Component {
 	) {
 		const sharp = s.node_require('sharp');
 		const path = s.node_require('path');
-		const { promisify } = s.node_require('util');
 		const locreq = s.node_require('locreq')(__dirname);
-		const fs = s.node_require('fs');
 		const hashFile = s.node_require(
 			path.resolve(__dirname, '../../lib/hash-file')
 		).default;
 		const imgSize = s.node_require('image-size');
+		const fs = s.node_require('fs');
+		const { promisify } = require('util');
+		const read = promisify(fs.readFile);
 
 		if (!image_path) {
 			image_path = path.resolve(
@@ -56,13 +55,18 @@ class ResponsiveImage extends Component {
 		//If resolutions array is not specified, fill it with values: 100, 200, ..., <img_width>
 		if (resolutions.length === 0) {
 			const { width } = imgSize(image_path);
-			for (let size = 100; size < Math.min(4096, width); size += 100) {
-				resolutions.push(size);
+			//Unless it's preview mode is ON. Then take just one format.
+			if (!s.preview_mode) {
+				for (
+					let size = 100;
+					size < Math.min(4096, width);
+					size += 100
+				) {
+					resolutions.push(size);
+				}
 			}
 			resolutions.push(width);
 		}
-
-		const readFile = promisify(fs.readFile);
 
 		let image_basename = path.basename(image_path); //Extract file's name
 		const extension = path.extname(image_basename).slice(1); //Get the file extension
@@ -81,18 +85,14 @@ class ResponsiveImage extends Component {
 				const path = await s.addOutputFile({
 					output_subdir: 'images',
 					base_name,
-					generator: async () => {
-						const sharp_resized = await sharp(
-							locreq.resolve(image_path)
-						).resize(resolution);
-
-						return await sharp_resized
+					generator: async () =>
+						await sharp(locreq.resolve(image_path))
+							.resize(resolution)
 							.toFormat(ext, {
 								quality,
 								...(options[ext] || {}),
 							})
-							.toBuffer();
-					},
+							.toBuffer(),
 					deps: [
 						file_hash,
 						resolutions,
@@ -121,11 +121,11 @@ class ResponsiveImage extends Component {
 			<picture>
 				<source
 					srcset="${srcset[0]}"
-					sizes="${sizes_attr}"
+					sizes="${sizes_attr || `${median_resolution}px`}"
 					alt="${alt}"/>
 				<source
 					srcset="${srcset[1]}"
-					sizes="${sizes_attr}"
+					sizes="${sizes_attr || `${median_resolution}px`}"
 					alt="${alt}"/>
 				<img
 					src="${output_files[extension][median_resolution]}"

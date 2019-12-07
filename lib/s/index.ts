@@ -1,21 +1,23 @@
-import * as fs from 'fs'
+import * as fs from 'fs';
 import * as path from 'path';
-import * as util from 'util'
+import * as util from 'util';
 
 const access = util.promisify(fs.access);
 const writeFile = util.promisify(fs.writeFile);
 
 const md5 = require('md5');
 const makeDir = require('make-dir');
-const { components } = require('../components');
+
+const { components } = require('../../components');
 
 class S {
-	constructor({ output_dir, path_prefix }) {
+	constructor({ output_dir, path_prefix, preview_mode }) {
 		this.output_dir = output_dir;
 		this.path_prefix = path_prefix; // for example: "/previews/92180392ueu093"
 
 		//Initialize all components
 		this.components = {};
+		this.preview_mode = preview_mode || false;
 
 		// creating components instances
 		for (const component_name in components) {
@@ -23,13 +25,20 @@ class S {
 				this
 			);
 		}
+		this.optimize = require('./optimization/optimize-me-if-you-can');
 	}
 
 	get Settings() {
 		return this.constructor.Settings;
 	}
 
-	async addOutputFile({ output_subdir, base_name, generator, deps }) {
+	async addOutputFile({
+		output_subdir,
+		base_name,
+		generator,
+		deps,
+		allow_optimize,
+	}) {
 		const hash = md5(JSON.stringify(deps));
 
 		let output_filename = base_name.split('.');
@@ -57,7 +66,10 @@ class S {
 		try {
 			await access(output_path);
 		} catch (error) {
+			const file = await generator();
 			await writeFile(output_path, await generator());
+			if (allow_optimize || this.preview_mode)
+				await this.optimizeFile(file, output_path);
 		}
 		return path.join(this.path_prefix, output_subdir, output_filename);
 	}
@@ -71,6 +83,10 @@ class S {
 				`Could not resolve module '${module_name}'. It might not be installed or you're running the s.node_require function in the browser, while it's only supposed to be called on backend side`
 			);
 		}
+	}
+
+	async optimizeFile(file, output_path) {
+		return await this.optimize(file, output_path);
 	}
 }
 

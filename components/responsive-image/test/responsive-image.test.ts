@@ -11,8 +11,6 @@ import * as locreq from 'locreq';
 const readdir = promisify(fs.readdir);
 const lrq = locreq(__dirname);
 
-const s = new S({ output_dir: __dirname, path_prefix: '' });
-
 const resolutions = [200, 300];
 const file_path = lrq.resolve('dist/assets/test-img.jpg');
 
@@ -23,11 +21,11 @@ const resize_data = {
 	sizes_attr: '100px',
 	alt: 'alt',
 };
-
 function deleteTestFiles() {
 	try {
 		fs.accessSync(path.resolve(__dirname, './images'));
 		execSync(`rm -rf ${path.resolve(__dirname, './images')}`);
+		execSync('rm -rf /tmp/in-test-img*');
 	} catch {
 		return;
 	}
@@ -40,7 +38,8 @@ beforeEach(function() {
 
 describe('responsive-image-creator', function() {
 	it('Should create images with given resolutions', async function() {
-		const result = await new ResponsiveImage(s).render(resize_data);
+		const s = new S({ output_dir: __dirname, path_prefix: '' });
+		await new ResponsiveImage(s).render(resize_data);
 		const files = await readdir(
 			path.resolve(__dirname, './images'),
 			'utf-8'
@@ -57,32 +56,45 @@ describe('responsive-image-creator', function() {
 	});
 
 	it('Should resolve a valid responsive html picture tag', async function() {
-		const result = await new ResponsiveImage(s).render(resize_data);
-		const handler: DomHandler = new DomHandler(
-			function(err, dom): void {
-				if (err) throw new Error(err);
-				const picture_node: any = dom.find(
-					node => node.name === 'picture' && node.type === 'tag'
-				);
-				for (const child of (picture_node as DomElement)
-					.children as Array<any>) {
-					if (child.name === 'source') {
+		for (const is_preview of [true, false]) {
+			const s = new S({
+				output_dir: __dirname,
+				path_prefix: '',
+				preview_mode: is_preview,
+			});
+			const result = await new ResponsiveImage(s).render(resize_data);
+			const handler = new DomHandler(
+				function(err, dom) {
+					if (err) throw new Error(err);
+					const picture_node = dom.find(
+						node => node.name === 'picture' && node.type === 'tag'
+					);
+					assert(picture_node.children.length > 1);
+					for (let child of picture_node.children) {
 						assert(
-							/images\/test-img-\d{3}\.[a-z0-9]{32}\.(webp|jpg)\s[0-9]{3}w/.test(
-								child.attribs.srcset
+							['img', 'source', 'picture', 'text'].includes(
+								child.name || child.type
 							)
 						);
+						if (child.name === 'source') {
+							assert(
+								/images\/test-img-\d{3}\.[a-z0-9]{32}\.(webp|jpg)\s[0-9]{3}w/.test(
+									child.attribs.srcset
+								)
+							);
+						}
 					}
-				}
-			},
-			{ normalizeWhitespace: true }
-		);
-		const parser = new Parser(handler);
-		parser.write(result);
-		parser.end();
+				},
+				{ normalizeWhitespace: true }
+			);
+			const parser = new Parser(handler);
+			parser.write(result);
+			parser.end();
+		}
 	});
 
 	it('Should change hash if input file or deps changed', async function() {
+		const s = new S({ output_dir: __dirname, path_prefix: '' });
 		const changed_image_data = {
 			...resize_data,
 			image_path: lrq.resolve('dist/assets/test-img-2.jpg'),
@@ -114,6 +126,7 @@ describe('responsive-image-creator', function() {
 	});
 
 	it('Should create a resolution array with specified values if not provided', async function() {
+		const s = new S({ output_dir: __dirname, path_prefix: '' });
 		const changed_resolutions_data = {
 			...resize_data,
 			resolutions: [],
@@ -130,9 +143,30 @@ describe('responsive-image-creator', function() {
 
 		assert(files.length !== 0);
 	});
+
+	it('Should take less time to create when in preview mode', async function() {
+		async function measure_time(is_preview) {
+			const start = process.hrtime();
+			const s = new S({
+				output_dir: __dirname,
+				path_prefix: '',
+				preview_mode: is_preview,
+			});
+			await new ResponsiveImage(s).render({
+				...resize_data,
+				resoulutions: [],
+			});
+			return process.hrtime(start)[1];
+		}
+
+		const with_preview_mode = await measure_time(true);
+		execSync('rm -rf /tmp/in-test-img*');
+		const without_preview_mode = await measure_time(false);
+		assert(without_preview_mode < with_preview_mode);
+	});
 });
 
 //After test delete the test files
-after(function() {
+afterEach(function() {
 	deleteTestFiles();
 });
