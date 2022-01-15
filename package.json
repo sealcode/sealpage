@@ -37,7 +37,7 @@
 		"imagemin-optipng": "^7.0.0",
 		"locreq": "^1.1.0",
 		"make-dir": "^3.0.0",
-		"marked": "^0.6.2",
+		"marked": "^4.0.10",
 		"md5": "^2.2.1",
 		"md5-file": "^4.0.0",
 		"mime": "^2.4.3",
