@@ -76,7 +76,7 @@
 		"eslint-plugin-react": "^7.13.0",
 		"file-loader": "^4.0.0",
 		"get-folder-size": "^2.0.1",
-		"node-sass": "^4.12.0",
+		"node-sass": "^7.0.0",
 		"react-svg-loader": "^3.0.3",
 		"rimraf": "^3.0.0",
 		"sass-loader": "^7.1.0",
