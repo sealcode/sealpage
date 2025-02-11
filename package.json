@@ -82,6 +82,6 @@
 		"sass-loader": "^7.1.0",
 		"style-loader": "^0.23.1",
 		"ts-mocha": "^6.0.0",
-		"webpack": "^4.32.2"
+		"webpack": "^5.97.1"
 	}
 }
